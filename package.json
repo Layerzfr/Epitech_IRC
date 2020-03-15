@@ -8,7 +8,7 @@
     "socket.io": "^2.3.0"
   },
   "scripts": {
-    "start": "npm i & npm i back & npm i front",
+    "start": "npm i && cd back && npm i && cd ../front && npm i  && cd ../",
     "back": "node back/src/app.js",
     "front": "cd front && ng serve",
     "scratch": "node index.js"
