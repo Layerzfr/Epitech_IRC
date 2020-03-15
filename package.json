@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "description": "NotDiscord",
   "dependencies": {
+    "back": "file:back",
     "express": "^4.15.2",
     "socket.io": "^2.3.0"
+  },
+  "scripts": {
+    "start": "npm i & npm i back & npm i front",
+    "back": "node back/src/app.js",
+    "front": "cd front && ng serve",
+    "scratch": "node index.js"
   }
 }
