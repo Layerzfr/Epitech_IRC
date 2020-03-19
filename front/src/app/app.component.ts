@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ChatService } from './chat.service';
+import {userName} from "./connexion/connexion.component";
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent {
   }
 
   sendMessage() {
-    this.chatService.sendMessage(this.newMessage);
+    this.chatService.sendMessage(userName + ': ' + this.newMessage);
     this.newMessage = '';
   }
   ngOnInit() {
