@@ -2,26 +2,24 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { ChannelListComponent } from './channel-list/channel-list.component';
-import { ChannelComponent } from './channel/channel.component';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import {FormsModule} from "@angular/forms";
 import { ConnexionComponent } from './connexion/connexion.component';
+import { ChannelListComponent } from './channel-list/channel-list.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
 
 @NgModule({
   declarations: [
     AppComponent,
-    ChannelListComponent,
-    ChannelComponent,
-    ConnexionComponent
+    ConnexionComponent,
+    ChannelListComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

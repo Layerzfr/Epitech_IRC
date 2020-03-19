@@ -12,7 +12,7 @@ io.on("connection", socket => {
     let previousId;
 
     console.log('a user connected');
-    io.emit('chat message', 'user conected');
+    // io.emit('new-message', 'user connected');
 
     const safeJoin = currentId => {
         socket.leave(previousId);
@@ -86,10 +86,14 @@ io.on("connection", socket => {
 
     socket.on('disconnect', function(){
         console.log('user disconnected');
-        io.emit('chat message', 'user disconected');
+        io.emit('new-message', 'user disconected');
     });
 
     io.emit("documents", Object.keys(documents));
+    socket.on('new-message', (message) => {
+        io.emit('new-message', message);
+        console.log(message);
+    });
 });
 
 http.listen(4444);

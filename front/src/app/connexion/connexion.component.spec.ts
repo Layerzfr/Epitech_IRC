@@ -10,7 +10,7 @@ describe('ConnexionComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ConnexionComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

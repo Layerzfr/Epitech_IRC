@@ -1,8 +1,7 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 
 import {ChannelService} from "../channel.service";
-import {userName} from '../connexion/connexion.component';
 
 @Component({
   selector: 'app-document-list',
@@ -14,8 +13,7 @@ export class ChannelListComponent implements OnInit, OnDestroy {
   currentDoc: string;
   private _docSub: Subscription;
 
-  constructor(private channelService: ChannelService) {
-  }
+  constructor(private channelService: ChannelService) { }
 
   ngOnInit() {
     this.documents = this.channelService.documents;
@@ -26,17 +24,9 @@ export class ChannelListComponent implements OnInit, OnDestroy {
     this._docSub.unsubscribe();
   }
 
-  pseudoMessage(id: string) {
-    if (userName === "Damien") {
-      console.log("OK TA MERE !")
-    } else {
-      this.channelService.getDocument(id);
-    }
-  }
-
-  /*loadDoc(id: string) {
+  loadDoc(id: string) {
     this.channelService.getDocument(id);
-  }*/
+  }
 
   newDoc() {
     this.channelService.newDocument();
