@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ChatService} from "../chat.service";
 
-export let userName;
+export let userName = null;
 
 @Component({
   selector: 'app-connexion',
@@ -9,13 +9,18 @@ export let userName;
   styleUrls: ['./connexion.component.scss']
 })
 export class ConnexionComponent implements OnInit {
+  public value: string;
+  public bool: boolean;
 
   constructor(private chatService: ChatService) {
   }
 
   ngOnInit(): void {
-    userName = prompt("Entrez votre pseudo !");
-    this.chatService.sendMessage(userName + ' is now connected ');
+  }
+
+  onEnter(value) {
+    this.value = value.target.value;
+    userName = this.value;
     console.log(userName)
   }
 
