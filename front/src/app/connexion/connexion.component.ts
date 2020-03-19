@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ChatService} from "../chat.service";
 
 export let userName;
 
@@ -9,10 +10,12 @@ export let userName;
 })
 export class ConnexionComponent implements OnInit {
 
-  constructor() { }
+  constructor(private chatService: ChatService) {
+  }
 
   ngOnInit(): void {
     userName = prompt("Entrez votre pseudo !");
+    this.chatService.sendMessage(userName + ' is now connected ');
     console.log(userName)
   }
 
