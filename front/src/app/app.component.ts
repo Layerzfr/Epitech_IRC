@@ -8,6 +8,7 @@ import {userName} from "./connexion/connexion.component";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+    [x: string]: any;
   newMessage: string;
   messageList:  string[] = [];
 
