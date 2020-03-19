@@ -19,8 +19,12 @@ export class ChannelService {
     this.socket.emit('addDoc', { id: this.docId(), doc: '' });
   }
 
-  editDocument(document: Channel) {
-    this.socket.emit('editDoc', document);
+  editDocument(documentId, newDocumentId) {
+    var doc = {
+      previous: documentId,
+      new: newDocumentId
+    };
+    this.socket.emit('editDoc', doc);
   }
 
   private docId() {

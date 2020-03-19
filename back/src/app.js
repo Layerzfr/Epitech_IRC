@@ -80,8 +80,13 @@ io.on("connection", socket => {
     });
 
     socket.on("editDoc", doc => {
-        documents[doc.id] = doc;
-        socket.to(doc.id).emit("document", doc);
+        console.log(doc);
+        socket.room = doc['new'];
+        documents[doc['new']] = documents[doc['previous']];
+        documents[doc['new']].id = doc['new'];
+        delete(documents[doc['previous']]);
+        io.emit("documents", Object.keys(documents));
+        console.log(documents);
     });
 
     socket.on('disconnect', function(){

@@ -24,7 +24,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
     this._docSub.unsubscribe();
   }
 
-  editDoc() {
-    this.channelService.editDocument(this.channel);
-  }
+  // editDoc() {
+  //   this.channelService.editDocument(this.channel);
+  // }
 }

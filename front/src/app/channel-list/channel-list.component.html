@@ -1,4 +1,9 @@
 <div class='sidenav'>
   <span (click)='newDoc()'>Nouveau channel</span>
-  <span [class.selected]='docId === currentDoc$' (click)='loadDoc(docId)' *ngFor='let docId of documents | async'>{{ docId }}</span>
+  <span [class.selected]='docId === currentDoc$' (click)='loadDoc(docId)' *ngFor='let docId of documents | async'>{{ docId }}
+
+  <div>
+    <input type="text" (keyup)="$event.keyCode == 13 && editDoc(docId, $event)">
+  </div>
+  </span>
 </div>
