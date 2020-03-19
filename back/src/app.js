@@ -86,13 +86,13 @@ io.on("connection", socket => {
 
     socket.on('disconnect', function(){
         console.log('user disconnected');
-        io.emit('new-message', 'user disconected');
+        // io.emit('new-message', 'user disconected');
     });
 
     io.emit("documents", Object.keys(documents));
     socket.on('new-message', (message) => {
-        io.emit('new-message', message);
         console.log(message);
+        io.to(message.id).emit('new-message', message.message);
     });
 });
 

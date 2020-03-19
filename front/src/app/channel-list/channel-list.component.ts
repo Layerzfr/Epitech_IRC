@@ -3,6 +3,8 @@ import { Observable, Subscription } from 'rxjs';
 
 import {ChannelService} from "../channel.service";
 
+export let currentDoc: string;
+
 @Component({
   selector: 'app-document-list',
   templateUrl: './channel-list.component.html',
@@ -10,14 +12,15 @@ import {ChannelService} from "../channel.service";
 })
 export class ChannelListComponent implements OnInit, OnDestroy {
   documents: Observable<string[]>;
-  currentDoc: string;
+  currentDoc$: string;
   private _docSub: Subscription;
 
   constructor(private channelService: ChannelService) { }
 
   ngOnInit() {
     this.documents = this.channelService.documents;
-    this._docSub = this.channelService.currentDocument.subscribe(doc => this.currentDoc = doc.id);
+    this._docSub = this.channelService.currentDocument.subscribe(doc => this.currentDoc$ = doc.id);
+    currentDoc = this.currentDoc$;
   }
 
   ngOnDestroy() {
@@ -25,6 +28,8 @@ export class ChannelListComponent implements OnInit, OnDestroy {
   }
 
   loadDoc(id: string) {
+    console.log(id);
+    currentDoc = id;
     this.channelService.getDocument(id);
   }
 
