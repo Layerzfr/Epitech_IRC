@@ -7,6 +7,7 @@ import { ChannelComponent } from './channel/channel.component';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import {FormsModule} from "@angular/forms";
+import { ConnexionComponent } from './connexion/connexion.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
 
@@ -14,7 +15,8 @@ const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
   declarations: [
     AppComponent,
     ChannelListComponent,
-    ChannelComponent
+    ChannelComponent,
+    ConnexionComponent
   ],
   imports: [
     BrowserModule,
