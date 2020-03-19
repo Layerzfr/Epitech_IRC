@@ -11,6 +11,9 @@ var channelList = {};
 io.on("connection", socket => {
     let previousId;
 
+    console.log('a user connected');
+    io.emit('chat message', 'user conected');
+
     const safeJoin = currentId => {
         socket.leave(previousId);
         socket.join(currentId);
@@ -79,6 +82,11 @@ io.on("connection", socket => {
     socket.on("editDoc", doc => {
         documents[doc.id] = doc;
         socket.to(doc.id).emit("document", doc);
+    });
+
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+        io.emit('chat message', 'user disconected');
     });
 
     io.emit("documents", Object.keys(documents));
