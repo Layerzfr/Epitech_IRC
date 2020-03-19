@@ -1,4 +1,0 @@
-<div class='sidenav'>
-  <span (click)='newDoc()'>Nouveau channel</span>
-  <span [class.selected]='docId === currentDoc' (click)='pseudoMessage(docId)' *ngFor='let docId of documents | async'>{{ docId }}</span>
-</div>
