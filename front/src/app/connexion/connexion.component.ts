@@ -13,6 +13,7 @@ export class ConnexionComponent implements OnInit {
   public bool: boolean;
 
   constructor(private chatService: ChatService) {
+    this.bool = true;
   }
 
   ngOnInit(): void {
@@ -20,6 +21,7 @@ export class ConnexionComponent implements OnInit {
 
   onEnter(value) {
     this.value = value.target.value;
+    this.bool = false;
     userName = this.value;
     console.log(userName)
   }
