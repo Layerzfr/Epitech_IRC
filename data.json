@@ -33,4 +33,45 @@
     "message": "edezdzed: test",
     "by": "edezdzed"
   }
+}{
+  "nac7T": {
+    "date": "03/20/2020 17",
+    "channel": "nac7T",
+    "message": "test: coucoi",
+    "by": "test"
+  }
+}{
+  "undefined": {
+    "date": "03/20/2020 17h13",
+    "message": "le test: test",
+    "by": "le test"
+  }
+}{
+  "YCmrP": {
+    "date": "03/20/2020 17h13",
+    "channel": "YCmrP",
+    "message": "le test: test",
+    "by": "le test"
+  }
+}{
+  "YCmrP": {
+    "date": "03/20/2020 17h13",
+    "channel": "YCmrP",
+    "message": "le test: test",
+    "by": "le test"
+  }
+}{
+  "YCmrP": {
+    "date": "03/20/2020 17h14",
+    "channel": "YCmrP",
+    "message": "po: test",
+    "by": "po"
+  }
+}{
+  "YCmrP": {
+    "date": "03/20/2020 17h14",
+    "channel": "YCmrP",
+    "message": "po: test",
+    "by": "po"
+  }
 }

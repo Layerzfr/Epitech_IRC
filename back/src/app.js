@@ -167,9 +167,10 @@ io.on("connection", socket => {
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = today.getFullYear();
-        var h = today.getHours()
+        var h = today.getHours();
+        var m = today.getMinutes()
 
-        today = mm + '/' + dd + '/' + yyyy + ' ' + h;
+        today = mm + '/' + dd + '/' + yyyy + ' ' + h + 'h' + m;
         var data = {};
         data[message.id] = {
                 date: today,
@@ -181,12 +182,6 @@ io.on("connection", socket => {
         console.log(parse.fileParsed);
 
         fs.appendFileSync('data.json', JSON.stringify(data, null, 2));
-        // parse.addToFile({
-        //     date: today,
-        //     channel: message.id,
-        //     message: message.message,
-        //     by: message.username
-        // }, "data.json");
 
 
     });
