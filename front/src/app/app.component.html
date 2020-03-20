@@ -1,7 +1,15 @@
 <app-connexion></app-connexion>
 <app-document-list></app-document-list>
 <div *ngFor="let message of messageList">
-  {{message}}
+  <div class='chat-wrapper'>
+    <div class='chat-message chat-message-sender'>
+      <div class='chat-message-wrapper'>
+        <div class='chat-message-content'>
+          <p>{{message}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <input [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()"/>
