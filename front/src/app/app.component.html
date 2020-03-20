@@ -1,17 +1,22 @@
-<app-connexion></app-connexion>
-<app-document-list></app-document-list>
-<div *ngFor="let message of messageList">
-  <div class='chat-wrapper'>
-    <div class='chat-message chat-message-sender'>
-      <img class='chat-image chat-image-default' src='https://image.flaticon.com/icons/png/512/36/36601.png'/>
-      <div class='chat-message-wrapper'>
-        <div class='chat-message-content'>
-          <p>{{message}}</p>
+<app-connexion style="z-index: 10"></app-connexion>
+
+<div class="container-all">
+  <app-document-list class="document-list"></app-document-list>
+  <div class="center">
+    <div class="message-send">
+      <div class="message-container" #scrollMe>
+        <div *ngFor="let message of messageList">
+          <div class='message-unique'>
+            <div class="trait"></div>
+            <p>{{message}}</p>
+          </div>
         </div>
       </div>
     </div>
+
+    <div class="flex-input">
+      <input class="input-message" [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()"/>
+      <button class="button-send" (click)="sendMessage()">Send Message</button>
+    </div>
   </div>
 </div>
-
-<input [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()"/>
-<button (click)="sendMessage()">Send Message</button>
