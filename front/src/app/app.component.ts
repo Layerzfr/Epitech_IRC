@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ChatService } from './chat.service';
 import {userName} from "./connexion/connexion.component";
 
@@ -7,7 +7,7 @@ import {userName} from "./connexion/connexion.component";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
     [x: string]: any;
   newMessage: string;
   messageList:  string[] = [];
