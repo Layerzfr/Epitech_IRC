@@ -13,6 +13,8 @@ export let currentDoc: string;
 export class ChannelListComponent implements OnInit, OnDestroy {
   documents: Observable<string[]>;
   currentDoc$: string;
+  bool: any;
+  isChecked: number = 0;
   private _docSub: Subscription;
 
   constructor(private channelService: ChannelService) { }
@@ -41,6 +43,15 @@ export class ChannelListComponent implements OnInit, OnDestroy {
 
   newDoc() {
     this.channelService.newDocument();
+  }
+
+  checkBox() {
+    this.bool = document.getElementById("squaredThree");
+    if (this.bool.checked == true) {
+      this.isChecked = 1 ;
+    } else {
+      this.isChecked = 0
+    }
   }
 
 }

@@ -1,4 +1,6 @@
-<app-connexion style="z-index: 10"></app-connexion>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
+<!--<app-connexion style="z-index: 10"></app-connexion>-->
 
 <div class="container-all">
   <app-document-list class="document-list"></app-document-list>
@@ -8,15 +10,18 @@
         <div *ngFor="let message of messageList">
           <div class='message-unique'>
             <div class="trait"></div>
-            <p>{{message}}</p>
+            <p style="margin-left: 58px">{{message}}</p>
           </div>
         </div>
       </div>
     </div>
 
     <div class="flex-input">
-      <input class="input-message" [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()"/>
-      <button class="button-send" (click)="sendMessage()">Send Message</button>
+      <input class="input-message" [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()"
+             placeholder="Tap message"/>
+      <button class="send" (click)="sendMessage()">
+        <i class="zmdi zmdi-mail-send"></i>
+      </button>
     </div>
   </div>
 </div>

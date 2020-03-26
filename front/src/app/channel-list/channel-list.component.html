@@ -1,9 +1,23 @@
 <div class='sidenav'>
-  <span (click)='newDoc()'>Nouveau channel</span>
-  <span [class.selected]='docId === currentDoc$' (click)='loadDoc(docId)' *ngFor='let docId of documents | async'>{{ docId }}
+  <span class="new-channel" (click)='newDoc()'>Nouveau channel</span>
+  <span class="text-sideNav" [class.selected]='docId === currentDoc$' (click)='loadDoc(docId)'
+        *ngFor='let docId of documents | async'>
 
-  <div>
-    <input type="text" (keyup)="$event.keyCode == 13 && editDoc(docId, $event)">
-  </div>
+    <section title=".squaredThree">
+      <div class="squaredThree">
+        <input type="checkbox" id="squaredThree" name="check" value="0" (click)="checkBox()"/>
+        <label for="squaredThree"></label>
+      </div>
+    </section>
+
+    <p class="channel-name">{{ docId }}</p>
+
+    <!--    <input type="text" (keyup)="$event.keyCode == 13 && editDoc(docId, $event)">-->
+    <i class="zmdi zmdi-edit"></i>
+
+    <div class="input-color-container">
+      <input id="input-color" value="#ed6868" class="input-color" type="color">
+    </div>
+
   </span>
 </div>
