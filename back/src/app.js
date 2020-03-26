@@ -92,6 +92,25 @@ io.on("connection", socket => {
 
     console.log('a user connected');
     socket.join("general");
+    documents["general"] = {
+        id: 'general',
+        doc: ''
+    };
+    io.emit("documents", Object.keys(documents));
+    previousId = "general";
+    socket.emit("document", {
+        id: 'general',
+        doc: ''
+    });
+
+    for( let prop in parsed ){
+        // console.log( parsed[prop] );
+        for (let message in parsed[prop]) {
+            console.log(parsed[prop][message]);
+            io.to(prop).emit('new-message', '[' + prop + '] ' + parsed[prop][message].date + ' ' + parsed[prop][message].message);
+        }
+        // io.to(parsed[prop]).emit('new-message', '[' + message.id + '] ' +  today + message.message);
+    }
     // io.emit('new-message', 'user connected');
 
     const safeJoin = currentId => {

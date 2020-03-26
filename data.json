@@ -101,6 +101,26 @@
       "channel": "JcpM0",
       "message": "test: zedzedezdzed",
       "by": "test"
+    },
+    "3": {
+      "date": "03/26/2020 10h53",
+      "channel": "JcpM0",
+      "message": "test: erferferf",
+      "by": "test"
+    }
+  },
+  "general": {
+    "1": {
+      "date": "03/26/2020 10h53",
+      "channel": "general",
+      "message": "test: zedzed",
+      "by": "test"
+    },
+    "2": {
+      "date": "03/26/2020 10h54",
+      "channel": "general",
+      "message": "test: ezde",
+      "by": "test"
     }
   }
 }
