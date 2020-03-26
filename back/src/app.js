@@ -197,6 +197,10 @@ io.on("connection", socket => {
         if(documents[command.substring(1)]) {
             message.id = command.substring(1);
             message.message = message.message.replace(command, '');
+            if(!io.sockets.adapter.rooms[message.id]) {
+                io.to(socket.id).emit('new-message', "Vous n'appartenez pas à ce channel.")
+                return;
+            }
             var roster = io.sockets.adapter.rooms[message.id].sockets;
             console.log(roster);
             var isInRoom = false;
