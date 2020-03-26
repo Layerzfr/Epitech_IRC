@@ -23,6 +23,10 @@ export class ChannelService {
     this.socket.emit('join', { id: DocId, user : username });
   }
 
+  leave(DocId, username) {
+    this.socket.emit('leave', { id: DocId, user : username });
+  }
+
   editDocument(documentId, newDocumentId) {
     var doc = {
       previous: documentId,

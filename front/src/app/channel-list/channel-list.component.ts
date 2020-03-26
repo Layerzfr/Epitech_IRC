@@ -52,7 +52,7 @@ export class ChannelListComponent implements OnInit, OnDestroy {
       this.isChecked = 1 ;
       this.channelService.join(DocId, userName)
     } else {
-      // this.channelService.leave(DocId, userName)
+      this.channelService.leave(DocId, userName)
       this.isChecked = 0
     }
   }

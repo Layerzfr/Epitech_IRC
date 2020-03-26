@@ -72,7 +72,12 @@ io.on("connection", socket => {
     socket.on("join", data => {
         socket.join(data.id);
         io.to(data.id).emit("new-message", "["+data.id+"] "+ data.user + " vient de rejoindre le salon");
-        // socket.emit("document", documents[docId]);
+    });
+
+    socket.on("leave", data => {
+        socket.leave(data.id);
+        io.to(data.id).emit("new-message", "["+data.id+"] "+ data.user + " vient de quitter le salon");
+        io.to(socket.id).emit("new-message", "Vous avez quitté le salon " + data.id);
     });
 
     socket.on("addDoc", doc => {
@@ -185,9 +190,20 @@ io.on("connection", socket => {
 
         var command = message.message.split(" ")[0];
         console.log(command.substring(1));
+        if(message.message[0] === "/" && !documents[command.substring(1)]) {
+            io.to(socket.id).emit('new-message', "Commande ou salon introuvable");
+            return;
+        }
         if(documents[command.substring(1)]) {
             message.id = command.substring(1);
             message.message = message.message.replace(command, '');
+            var roster = io.sockets.adapter.rooms[message.id].sockets;
+            console.log(roster);
+            var isInRoom = false;
+            if(!roster[socket.id]) {
+                io.to(socket.id).emit('new-message', "Vous n'appartenez pas à ce channel.")
+                return;
+            }
         }
 
         today = dd + '/' + mm + '/' + yyyy + ' ' + h + 'h' + m;
@@ -199,7 +215,7 @@ io.on("connection", socket => {
 
         var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
             parsed = JSON.parse(JSON.stringify(jsonString));
-            console.log(parsed);
+            // console.log(parsed);
             parsed = parsed.replace(/}{/g, ",\n");
             parsed = JSON.parse(parsed);
 
@@ -225,7 +241,7 @@ io.on("connection", socket => {
 
             fs.writeFile('data.json', JSON.stringify(parsed, null, 2), (err) => {
                 if (err) throw err;
-                console.log('Data written to file');
+                // console.log('Data written to file');
             });
 
             // fs.appendFileSync('data.json', JSON.stringify(parsed, null, 2));
