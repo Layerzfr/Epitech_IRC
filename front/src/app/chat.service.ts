@@ -31,4 +31,9 @@ export class ChatService {
     });
 
   }
+
+  public newConnection(username)
+  {
+    this.socket.emit('new-user', username);
+  }
 }
