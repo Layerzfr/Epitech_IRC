@@ -37,6 +37,10 @@ io.on("connection", socket => {
             parsed = parsed.replace(/}{/g, ",\n");
             parsed = JSON.parse(parsed);
             for( let prop in parsed ){
+                if(prop !== "general")
+                {
+                    continue;
+                }
                 for (let message in parsed[prop]) {
                     io.to(socket.id).emit('new-message', '[' + prop + '] ' + parsed[prop][message].date + ' ' + parsed[prop][message].message);
                 }
