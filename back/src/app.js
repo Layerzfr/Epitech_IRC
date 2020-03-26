@@ -82,9 +82,9 @@ io.on("connection", socket => {
 
     socket.on("addDoc", doc => {
         documents[doc.id] = doc;
-        safeJoin(doc.id);
+        // safeJoin(doc.id);
         io.emit("documents", Object.keys(documents));
-        socket.emit("document", doc);
+        // socket.emit("document", doc);
 
         var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
             parsed = JSON.parse(JSON.stringify(jsonString));
