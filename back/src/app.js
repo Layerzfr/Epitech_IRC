@@ -67,12 +67,31 @@ var curChannel = 'general';
 var people = {};
 var channelList = {};
 let parse = new Parser();
-
+var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
+    parsed = JSON.parse(JSON.stringify(jsonString));
+    if (err) {
+        console.log("File read failed:", err)
+        return
+    }
+});
+var done = false;
 
 io.on("connection", socket => {
+
+
+    parsed = parsed.replace(/}{/g, ",\n");
+    parsed = JSON.parse(parsed);
+
+
+    console.log(parsed);
+
+
+
+
     let previousId;
 
     console.log('a user connected');
+    socket.join("general");
     // io.emit('new-message', 'user connected');
 
     const safeJoin = currentId => {
@@ -159,10 +178,6 @@ io.on("connection", socket => {
 
     socket.on('new-message', (message) => {
         console.log(message);
-        io.to(message.id).emit('new-message', message.message);
-
-
-        parse.doParse("data.json");
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -171,17 +186,51 @@ io.on("connection", socket => {
         var m = today.getMinutes()
 
         today = mm + '/' + dd + '/' + yyyy + ' ' + h + 'h' + m;
-        var data = {};
-        data[message.id] = {
-                date: today,
-                channel: message.id,
-                message: message.message,
-                by: message.username
-        };
+        io.to(message.id).emit('new-message', '[' + message.id + '] ' +  today + message.message);
 
-        console.log(parse.fileParsed);
 
-        fs.appendFileSync('data.json', JSON.stringify(data, null, 2));
+        parse.doParse("data.json");
+        var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
+            parsed = JSON.parse(JSON.stringify(jsonString));
+            console.log(parsed);
+            parsed = parsed.replace(/}{/g, ",\n");
+            parsed = JSON.parse(parsed);
+
+
+            if(parsed[message.id]) {
+                parsed[message.id][Object.keys(parsed[message.id]).length + 1] = {
+                    date: today,
+                    channel: message.id,
+                    message: message.message,
+                    by: message.username
+                };
+            } else {
+                parsed[message.id] = {
+                    1: {
+                        date: today,
+                        channel: message.id,
+                        message: message.message,
+                        by: message.username
+                    }
+                }
+            }
+
+
+
+            console.log(parse.fileParsed);
+
+            fs.writeFile('data.json', JSON.stringify(parsed, null, 2), (err) => {
+                if (err) throw err;
+                console.log('Data written to file');
+            });
+
+            // fs.appendFileSync('data.json', JSON.stringify(parsed, null, 2));
+            if (err) {
+                console.log("File read failed:", err)
+                return
+            }
+        });
+
 
 
     });
