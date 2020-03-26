@@ -4,7 +4,7 @@
     text-decoration: none;
     font-size: 20px;
     font-family: 'Roboto', sans-serif;
-    color: #818181;
+    //color: #818181;
     display: flex;
     flex-direction: row;
   }
@@ -32,6 +32,14 @@
   margin-right: 10px;
   margin-bottom: 0;
   margin-top: 0;
+}
+
+.channel-name-general {
+  margin-left: 25px;
+  margin-right: 10px;
+  margin-bottom: 0;
+  margin-top: 0;
+  color: white;
 }
 
 

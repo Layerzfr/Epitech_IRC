@@ -1,6 +1,6 @@
 <div class='sidenav'>
   <span class="new-channel" (click)='newDoc()'>Nouveau channel</span>
-  <span class="text-sideNav" [class.selected]='docId === currentDoc$' (click)='loadDoc(docId)'
+  <span class="text-sideNav" [class.selected]='docId === currentDoc$'
         *ngFor='let docId of documents | async'>
 
     <section title=".squaredThree">
@@ -10,13 +10,19 @@
       </div>
     </section>
 
-    <p class="channel-name">{{ docId }}</p>
+    <ng-template [ngIf]="docId != 'general'" [ngIfElse]="general">
+      <p class="channel-name" [ngStyle]="{'color': generateHex(docId)}" id="{{ docId }}">{{ docId }}</p>
+    </ng-template>
+    <ng-template #general>
+      <p class="channel-name-general">{{ docId }}</p>
+    </ng-template>
 
     <!--    <input type="text" (keyup)="$event.keyCode == 13 && editDoc(docId, $event)">-->
-    <i class="zmdi zmdi-edit"></i>
 
-    <div class="input-color-container">
-      <input id="input-color" value="#ed6868" class="input-color" type="color">
+    <i *ngIf="docId != 'general'" class="zmdi zmdi-edit" (keyup)="$event.keyCode == 13 && editDoc(docId, $event)"></i>
+
+    <div *ngIf="docId != 'general'" class="input-color-container">
+      <input class="input-color" type="color" id='{{ id }}' [value]='generateHex(docId)'>
     </div>
 
   </span>
