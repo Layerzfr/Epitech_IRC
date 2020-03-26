@@ -1,7 +1,3 @@
-
-
-
-
 const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
@@ -18,16 +14,27 @@ var done = false;
 io.on("connection", socket => {
     let previousId;
 
+    const safeJoin = currentId => {
+        socket.leave(previousId);
+        socket.join(currentId);
+        previousId = currentId;
+    };
+
     console.log('a user connected');
-    socket.join("general");
     documents["general"] = {
         id: 'general',
         doc: ''
     };
+
+    safeJoin("general");
+    io.emit("documents", Object.keys(documents));
+    socket.emit("document", documents["general"]);
+
+
     io.emit("documents", Object.keys(documents));
     previousId = "general";
     socket.emit("document", {
-        id: 'general',
+        id: "general",
         doc: ''
     });
 
@@ -57,22 +64,6 @@ io.on("connection", socket => {
 
 
 
-
-
-
-
-
-
-
-
-    // io.emit('new-message', 'user connected');
-
-    const safeJoin = currentId => {
-        socket.leave(previousId);
-        socket.join(currentId);
-        previousId = currentId;
-    };
-
     socket.on("getDoc", docId => {
         safeJoin(docId);
         socket.emit("document", documents[docId]);
@@ -83,6 +74,31 @@ io.on("connection", socket => {
         safeJoin(doc.id);
         io.emit("documents", Object.keys(documents));
         socket.emit("document", doc);
+
+        var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
+            parsed = JSON.parse(JSON.stringify(jsonString));
+            parsed = parsed.replace(/}{/g, ",\n");
+            parsed = JSON.parse(parsed);
+
+            parsed[doc.id] = {
+                "data": {
+                    "color" : "#75CAFE",
+                    "creator": people[socket.id],
+                }
+            };
+
+
+            fs.writeFile('data.json', JSON.stringify(parsed, null, 2), (err) => {
+                if (err) throw err;
+                console.log('Data written to file');
+            });
+
+            // fs.appendFileSync('data.json', JSON.stringify(parsed, null, 2));
+            if (err) {
+                console.log("File read failed:", err)
+                return
+            }
+        });
     });
 
     socket.on('delete room', function(channel){
@@ -161,7 +177,11 @@ io.on("connection", socket => {
         var h = today.getHours();
         var m = today.getMinutes()
 
-        today = mm + '/' + dd + '/' + yyyy + ' ' + h + 'h' + m;
+        today = dd + '/' + mm + '/' + yyyy + ' ' + h + 'h' + m;
+        if(message.id === undefined)
+        {
+            message.id = "general";
+        }
         io.to(message.id).emit('new-message', '[' + message.id + '] ' +  today + message.message);
 
         var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
