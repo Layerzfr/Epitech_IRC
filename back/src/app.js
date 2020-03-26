@@ -1,58 +1,4 @@
-class Parser {
 
-    constructor() {
-        this.fileParsed = null;
-        this.fileName = null;
-    }
-
-    doParse(filename) {
-
-        var fileJson = fs.readFile('./' + filename, 'utf8', (err, jsonString) => {
-            this.fileParsed = jsonString;
-            this.fileName = filename;
-            if (err) {
-                console.log("File read failed:", err)
-                return
-            }
-        })
-    }
-
-    async addToFile(data = null, filename = null)
-    {
-        if(filename == null)
-        {
-            this.fileName = "new_file-"+Date.now()+".json";
-        } else {
-            this.fileName = filename;
-        }
-
-        if(data === null)
-        {
-            data = {};
-        }
-
-
-
-
-        let datae = JSON.stringify(data, null, 2);
-
-        await this.doParse(filename);
-
-        if(this.fileParsed !== null)
-        {
-
-            let test = this.fileParsed;
-            datae = datae.concat(test);
-        }
-        this.fileParsed = datae;
-
-
-        fs.writeFile(this.fileName, datae, (err) => {
-            if (err) throw err;
-            console.log('Data written to file');
-        });
-    }
-}
 
 
 
@@ -66,7 +12,6 @@ const documents = {}; //channel bdd
 var curChannel = 'general';
 var people = {};
 var channelList = {};
-let parse = new Parser();
 
 var done = false;
 
@@ -215,8 +160,6 @@ io.on("connection", socket => {
         today = mm + '/' + dd + '/' + yyyy + ' ' + h + 'h' + m;
         io.to(message.id).emit('new-message', '[' + message.id + '] ' +  today + message.message);
 
-
-        parse.doParse("data.json");
         var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
             parsed = JSON.parse(JSON.stringify(jsonString));
             console.log(parsed);
@@ -243,9 +186,6 @@ io.on("connection", socket => {
             }
 
 
-
-            console.log(parse.fileParsed);
-
             fs.writeFile('data.json', JSON.stringify(parsed, null, 2), (err) => {
                 if (err) throw err;
                 console.log('Data written to file');
@@ -257,8 +197,6 @@ io.on("connection", socket => {
                 return
             }
         });
-
-
 
     });
 });
