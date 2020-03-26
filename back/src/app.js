@@ -67,27 +67,10 @@ var curChannel = 'general';
 var people = {};
 var channelList = {};
 let parse = new Parser();
-var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
-    parsed = JSON.parse(JSON.stringify(jsonString));
-    if (err) {
-        console.log("File read failed:", err)
-        return
-    }
-});
+
 var done = false;
 
 io.on("connection", socket => {
-
-
-    parsed = parsed.replace(/}{/g, ",\n");
-    parsed = JSON.parse(parsed);
-
-
-    console.log(parsed);
-
-
-
-
     let previousId;
 
     console.log('a user connected');
@@ -103,14 +86,36 @@ io.on("connection", socket => {
         doc: ''
     });
 
-    for( let prop in parsed ){
-        // console.log( parsed[prop] );
-        for (let message in parsed[prop]) {
-            console.log(parsed[prop][message]);
-            io.to(prop).emit('new-message', '[' + prop + '] ' + parsed[prop][message].date + ' ' + parsed[prop][message].message);
-        }
-        // io.to(parsed[prop]).emit('new-message', '[' + message.id + '] ' +  today + message.message);
-    }
+    socket.on("new-user", username => {
+        var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
+            parsed = JSON.parse(JSON.stringify(jsonString));
+            parsed = parsed.replace(/}{/g, ",\n");
+            parsed = JSON.parse(parsed);
+            for( let prop in parsed ){
+                for (let message in parsed[prop]) {
+                    io.to(socket.id).emit('new-message', '[' + prop + '] ' + parsed[prop][message].date + ' ' + parsed[prop][message].message);
+                }
+            }
+            people[socket.id] = username;
+            io.to("general").emit('new-message', '[general] ' + username + ' vient de rejoindre le salon');
+            if (err) {
+                console.log("File read failed:", err)
+                return
+            }
+        });
+    })
+
+
+
+
+
+
+
+
+
+
+
+
     // io.emit('new-message', 'user connected');
 
     const safeJoin = currentId => {
@@ -190,7 +195,10 @@ io.on("connection", socket => {
 
     socket.on('disconnect', function(){
         console.log('user disconnected');
-        // io.emit('new-message', 'user disconected');
+
+        if(people[socket.id] !== undefined) {
+            io.to("general").emit('new-message', "[general] " +people[socket.id] + " vient de quitter le salon");
+        }
     });
 
     io.emit("documents", Object.keys(documents));
