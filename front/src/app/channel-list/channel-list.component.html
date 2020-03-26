@@ -1,12 +1,12 @@
 <div class='sidenav'>
   <span class="new-channel" (click)='newDoc()'>Nouveau channel</span>
-  <span class="text-sideNav" [class.selected]='docId === currentDoc$' (click)='loadDoc(docId)'
+  <span class="text-sideNav" [class.selected]='docId === currentDoc$'
         *ngFor='let docId of documents | async'>
 
     <section title=".squaredThree">
       <div class="squaredThree">
-        <input type="checkbox" id="squaredThree" name="check" value="0" (click)="checkBox()"/>
-        <label for="squaredThree"></label>
+        <input type="checkbox" id="{{docId}}" name="check" value="0" (click)="checkBox(docId)"/>
+        <label for="{{docId}}"></label>
       </div>
     </section>
 

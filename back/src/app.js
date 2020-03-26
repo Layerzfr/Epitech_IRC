@@ -69,6 +69,12 @@ io.on("connection", socket => {
         socket.emit("document", documents[docId]);
     });
 
+    socket.on("join", data => {
+        socket.join(data.id);
+        io.to(data.id).emit("new-message", "["+data.id+"] "+ data.user + " vient de rejoindre le salon");
+        // socket.emit("document", documents[docId]);
+    });
+
     socket.on("addDoc", doc => {
         documents[doc.id] = doc;
         safeJoin(doc.id);
@@ -177,12 +183,19 @@ io.on("connection", socket => {
         var h = today.getHours();
         var m = today.getMinutes()
 
+        var command = message.message.split(" ")[0];
+        console.log(command.substring(1));
+        if(documents[command.substring(1)]) {
+            message.id = command.substring(1);
+            message.message = message.message.replace(command, '');
+        }
+
         today = dd + '/' + mm + '/' + yyyy + ' ' + h + 'h' + m;
         if(message.id === undefined)
         {
             message.id = "general";
         }
-        io.to(message.id).emit('new-message', '[' + message.id + '] ' +  today + message.message);
+        io.to(message.id).emit('new-message', '[' + message.id + '] ' +  today + ': ' + people[socket.id] + ': ' + message.message);
 
         var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
             parsed = JSON.parse(JSON.stringify(jsonString));

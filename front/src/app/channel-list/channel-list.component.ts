@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
 import {ChannelService} from "../channel.service";
+import {userName} from "../connexion/connexion.component";
 
 export let currentDoc: string;
 
@@ -45,11 +46,13 @@ export class ChannelListComponent implements OnInit, OnDestroy {
     this.channelService.newDocument();
   }
 
-  checkBox() {
-    this.bool = document.getElementById("squaredThree");
+  checkBox(DocId) {
+    this.bool = document.getElementById(DocId);
     if (this.bool.checked == true) {
       this.isChecked = 1 ;
+      this.channelService.join(DocId, userName)
     } else {
+      // this.channelService.leave(DocId, userName)
       this.isChecked = 0
     }
   }

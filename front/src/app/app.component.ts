@@ -19,7 +19,7 @@ export class AppComponent implements OnInit, AfterViewChecked{
   }
 
   sendMessage() {
-    this.chatService.sendMessage(userName + ': ' + this.newMessage);
+    this.chatService.sendMessage(this.newMessage);
     this.newMessage = '';
   }
   ngOnInit() {
