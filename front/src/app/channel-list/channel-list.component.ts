@@ -69,12 +69,13 @@ export class ChannelListComponent implements OnInit, OnDestroy {
   checkBox(DocId) {
     this.bool = document.getElementById(DocId);
     if (this.bool.checked == true) {
-      this.isChecked = 1 ;
+      this.isChecked = 1;
       this.channelService.join(DocId, userName)
     } else {
       this.channelService.leave(DocId, userName)
       this.isChecked = 0
     }
+  }
 
 
     dynamicStyles() {
