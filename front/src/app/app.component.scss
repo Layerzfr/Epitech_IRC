@@ -166,7 +166,6 @@ i.zmdi.zmdi-mail-send {
   flex-direction: column;
   height: 100%;
   width: 100%;
-  background-color: blanchedalmond;
 }
 
 .message-container {
@@ -175,4 +174,17 @@ i.zmdi.zmdi-mail-send {
   width: 100%;
   height: 100%;
   overflow: auto;
+}
+
+.pseudo-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #2196f3;
+}
+
+.pseudo {
+
 }
