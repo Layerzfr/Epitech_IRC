@@ -5,8 +5,14 @@
 
     <section title=".squaredThree">
       <div class="squaredThree">
-        <input type="checkbox" id="{{docId}}" name="check" value="0" (click)="checkBox(docId)"/>
-        <label for="{{docId}}"></label>
+        <ng-template [ngIf]="docId != 'general'" [ngIfElse]="channel">
+          <input type="checkbox" id="{{docId}}" name="check" value="0" (click)="checkBox(docId)"/>
+           <label for="{{docId}}"></label>
+        </ng-template>
+        <ng-template #channel>
+          <input type="checkbox" name="check" value="0" (click)="checkBox(docId)" checked/>
+           <label for="{{docId}}"></label>
+        </ng-template>
       </div>
     </section>
 
