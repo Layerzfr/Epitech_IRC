@@ -1,8 +1,8 @@
+import {ConnexionComponent, userName} from "../connexion/connexion.component";
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
 
+import {Observable, Subscription} from 'rxjs';
 import {ChannelService} from "../channel.service";
-import {userName} from "../connexion/connexion.component";
 
 export let currentDoc: string;
 
@@ -22,14 +22,20 @@ export class ChannelListComponent implements OnInit, OnDestroy {
     id: any;
     colors = {};
     private _docSub: Subscription;
+    username= userName;
 
-    constructor(private channelService: ChannelService) {
+    constructor(private channelService: ChannelService, private connexionComponent: ConnexionComponent) {
     }
 
     ngOnInit() {
         this.documents = this.channelService.documents;
         this._docSub = this.channelService.currentDocument.subscribe(doc => this.currentDoc$ = doc.id);
         currentDoc = this.currentDoc$;
+    }
+
+    getUsername()
+    {
+      return userName;
     }
 
     ngOnDestroy() {
