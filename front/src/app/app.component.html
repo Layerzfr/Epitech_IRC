@@ -19,10 +19,9 @@
       <div class="pseudo-container">
         <div class="pseudo">
           <p class="title">Online</p>
-          <p class="pseudo-name">PSEUDO</p>
           <div *ngFor="let user of userList">
             <div *ngFor="let username of user">
-              <p>
+              <p class="pseudo-name">
                 {{username}}
               </p>
             </div>
