@@ -9,7 +9,7 @@ import {userName} from "./connexion/connexion.component";
   providedIn: 'root'
 })
 export class ChatService {
-  messageList:  string[] = [];
+  messageList:  [][] = [];
   constructor(private socket: Socket) { }
   public sendMessage(message) {
     // console.log(currentDoc);

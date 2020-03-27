@@ -1,26 +1,25 @@
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 
-<!--  <app-connexion style="z-index: 10"></app-connexion>-->
+<app-connexion style="z-index: 10"></app-connexion>
 
 <div class="container-all">
   <app-document-list class="document-list"></app-document-list>
   <div class="center">
-    <div class="pseudo-chat">
-      <div class="message-send">
-        <div class="message-container" #scrollMe>
-          <div *ngFor="let message of messageList">
-            <div class='message-unique'>
-              <div class="trait"></div>
-              <p style="margin-left: 58px; margin-top: 10px">{{message}}</p>
-            </div>
+    <div class="message-send">
+      <div class="message-container" #scrollMe>
+        <div *ngFor="let message of messageList">
+          <div class='message-unique'>
+            <div class="trait"></div>
+            <p style="margin-left: 58px"><span [ngStyle]="{'color': message[2]}"> [{{message[1]}}
+              ] </span> {{message[0]}}</p>
           </div>
         </div>
-        <div class="pseudo-container">
-          <div class="pseudo">
-            <p class="title">Online</p>
-            <p class="pseudo-name">PSEUDO</p>
-          </div>
+      </div>
+      <div class="pseudo-container">
+        <div class="pseudo">
+          <p class="title">Online</p>
+          <p class="pseudo-name">PSEUDO</p>
         </div>
       </div>
     </div>

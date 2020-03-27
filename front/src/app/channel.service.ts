@@ -7,7 +7,7 @@ import {Channel} from "./models/channel";
 })
 export class ChannelService {
   currentDocument = this.socket.fromEvent<Channel>('document');
-  documents = this.socket.fromEvent<string[]>('documents');
+  documents = this.socket.fromEvent<{}[]>('documents');
 
   constructor(private socket: Socket) { }
 
@@ -16,7 +16,7 @@ export class ChannelService {
   }
 
   newDocument() {
-    this.socket.emit('addDoc', { id: this.docId(), doc: '' });
+    this.socket.emit('addDoc', { id: this.docId(), doc: '', color: '' });
   }
 
   join(DocId, username) {

@@ -13,7 +13,7 @@ export let currentDoc: string;
 })
 
 export class ChannelListComponent implements OnInit, OnDestroy {
-    documents: Observable<string[]>;
+    documents: Observable<{}[]>;
     currentDoc$: string;
     bool: any;
     isChecked: number = 0;

@@ -1,34 +1,33 @@
 <div class='sidenav'>
   <span class="new-channel" (click)='newDoc()'>Nouveau channel</span>
-  <span class="text-sideNav" [class.selected]='docId === currentDoc$'
-        *ngFor='let docId of documents | async'>
+  <span class="text-sideNav" *ngFor='let docId of documents | async'>
 
     <section title=".squaredThree">
       <div class="squaredThree">
-        <ng-template [ngIf]="docId != 'general'" [ngIfElse]="channel">
-          <input type="checkbox" id="{{docId}}" name="check" value="0" (click)="checkBox(docId)"/>
-           <label for="{{docId}}"></label>
+        <ng-template [ngIf]="docId.id != 'general'" [ngIfElse]="channel">
+          <input type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)"/>
+           <label for="{{docId.id}}"></label>
         </ng-template>
         <ng-template #channel>
-          <input type="checkbox" name="check" value="0" (click)="checkBox(docId)" checked/>
-           <label for="{{docId}}"></label>
+          <input type="checkbox" name="check" value="0" (click)="checkBox(docId.id)" checked/>
+           <label for="{{docId.id}}"></label>
         </ng-template>
       </div>
     </section>
 
-    <ng-template [ngIf]="docId != 'general'" [ngIfElse]="general">
-      <p class="channel-name" [ngStyle]="{'color': generateHex(docId)}" id="{{ docId }}">{{ docId }}</p>
+    <ng-template [ngIf]="docId.id != 'general'" [ngIfElse]="general">
+      <p class="channel-name" [ngStyle]="{'color': docId.color}" id="{{ docId.id }}">{{ docId.id }}</p>
     </ng-template>
     <ng-template #general>
-      <p class="channel-name-general">{{ docId }}</p>
+      <p class="channel-name-general">{{ docId.id }}</p>
     </ng-template>
 
-    <!--    <input type="text" (keyup)="$event.keyCode == 13 && editDoc(docId, $event)">-->
+    <!--    <input type="text" (keyup)="$event.keyCode == 13 && editDoc(docId.id, $event)">-->
 
     <i *ngIf="docId != 'general'" class="zmdi zmdi-edit" (click)="editDoc(docId, $event)"></i>
 
-    <div *ngIf="docId != 'general'" class="input-color-container">
-      <input class="input-color" type="color" id='{{ id }}' [value]='generateHex(docId)'>
+    <div *ngIf="docId.id != 'general'" class="input-color-container">
+      <input class="input-color" type="color" id='{{ id }}' [value]='docId.color'>
     </div>
 
     <i *ngIf="docId != 'general'" class="zmdi zmdi-close-circle" (keyup)="$event.keyCode == 13 && editDoc(docId, $event)"></i>
