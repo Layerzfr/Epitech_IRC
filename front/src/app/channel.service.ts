@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import {Channel} from "./models/channel";
+import {userName} from "./connexion/connexion.component";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class ChannelService {
   }
 
   newDocument() {
-    this.socket.emit('addDoc', { id: this.docId(), doc: '', color: '' });
+    this.socket.emit('addDoc', { id: this.docId(), doc: '', color: '', username: userName });
   }
 
   join(DocId, username) {
@@ -34,6 +35,15 @@ export class ChannelService {
     };
     this.socket.emit('editDoc', doc);
   }
+
+  editColor(documentId, color) {
+    this.socket.emit('editColor', [documentId, color]);
+  }
+
+  deleteDocument(documentId) {
+    this.socket.emit('deleteDoc', documentId);
+  }
+
 
   private docId() {
     let text = '';

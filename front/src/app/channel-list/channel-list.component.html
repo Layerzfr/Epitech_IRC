@@ -1,5 +1,5 @@
 <div class='sidenav'>
-  <span class="new-channel" (click)='newDoc()'>Nouveau channel</span>
+  <span class="new-channel" (click)='newDoc()'>Nouveau channel </span>
   <span class="text-sideNav" *ngFor='let docId of documents | async'>
 
     <section title=".squaredThree">
@@ -23,14 +23,16 @@
     </ng-template>
 
     <!--    <input type="text" (keyup)="$event.keyCode == 13 && editDoc(docId.id, $event)">-->
-
-    <i *ngIf="docId.id != 'general'" class="zmdi zmdi-edit" (click)="changeInputStatus(docId.id)"></i>
+     <div *ngIf="docId.username == getUsername()" style="display: inherit">
+    <i *ngIf="docId != 'general'" class="zmdi zmdi-edit" (click)="changeInputStatus(docId.id)"></i>
 
     <div *ngIf="docId.id != 'general'" class="input-color-container">
-      <input class="input-color" type="color" id='{{ id }}' [value]='docId.color'>
+      <input class="input-color" type="color" id='{{ id }}' [value]='docId.color' (change)="editColorDoc(docId.id, $event.target.value)">
     </div>
 
-    <i *ngIf="docId.id != 'general'" class="zmdi zmdi-close-circle" (keyup)="$event.keyCode == 13 && editDoc(docId, $event)"></i>
 
+    <i *ngIf="docId != 'general'" class="zmdi zmdi-close-circle"
+       (click)="deleteDoc(docId.id)"></i>
+    </div>
   </span>
 </div>

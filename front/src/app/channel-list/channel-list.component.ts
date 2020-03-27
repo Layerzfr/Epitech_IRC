@@ -1,8 +1,8 @@
+import {ConnexionComponent, userName} from "../connexion/connexion.component";
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
 
+import {Observable, Subscription} from 'rxjs';
 import {ChannelService} from "../channel.service";
-import {userName} from "../connexion/connexion.component";
 
 export let currentDoc: string;
 
@@ -23,9 +23,10 @@ export class ChannelListComponent implements OnInit, OnDestroy {
   colors = {};
   private _docSub: Subscription;
   active: number;
+    username= userName;
 
-  constructor(private channelService: ChannelService) {
-  }
+    constructor(private channelService: ChannelService, private connexionComponent: ConnexionComponent) {
+    }
 
   ngOnInit() {
     this.documents = this.channelService.documents;
@@ -33,9 +34,14 @@ export class ChannelListComponent implements OnInit, OnDestroy {
     currentDoc = this.currentDoc$;
   }
 
-  ngOnDestroy() {
-    this._docSub.unsubscribe();
-  }
+    getUsername()
+    {
+      return userName;
+    }
+
+    ngOnDestroy() {
+        this._docSub.unsubscribe();
+    }
 
   loadDoc(id: string) {
     console.log(id);
@@ -48,9 +54,17 @@ export class ChannelListComponent implements OnInit, OnDestroy {
     this.channelService.editDocument(id, newId.target.value);
   }
 
-  newDoc() {
-    this.channelService.newDocument();
+  editColorDoc(id: string, color) {
+    this.channelService.editColor(id, color);
   }
+
+  deleteDoc(id: string) {
+    this.channelService.deleteDocument(id);
+  }
+
+    newDoc() {
+        this.channelService.newDocument();
+    }
 
   generateHex(channel: any) {
     let hex = '#';
