@@ -22,11 +22,11 @@ export class ChannelListComponent implements OnInit, OnDestroy {
   id: any;
   colors = {};
   private _docSub: Subscription;
-  active: number;
-    username= userName;
+  active: number = 1;
+  username = userName;
 
-    constructor(private channelService: ChannelService, private connexionComponent: ConnexionComponent) {
-    }
+  constructor(private channelService: ChannelService, private connexionComponent: ConnexionComponent) {
+  }
 
   ngOnInit() {
     this.documents = this.channelService.documents;
@@ -34,14 +34,13 @@ export class ChannelListComponent implements OnInit, OnDestroy {
     currentDoc = this.currentDoc$;
   }
 
-    getUsername()
-    {
-      return userName;
-    }
+  getUsername() {
+    return userName;
+  }
 
-    ngOnDestroy() {
-        this._docSub.unsubscribe();
-    }
+  ngOnDestroy() {
+    this._docSub.unsubscribe();
+  }
 
   loadDoc(id: string) {
     console.log(id);
@@ -62,9 +61,9 @@ export class ChannelListComponent implements OnInit, OnDestroy {
     this.channelService.deleteDocument(id);
   }
 
-    newDoc() {
-        this.channelService.newDocument();
-    }
+  newDoc() {
+    this.channelService.newDocument();
+  }
 
   generateHex(channel: any) {
     let hex = '#';
@@ -94,7 +93,7 @@ export class ChannelListComponent implements OnInit, OnDestroy {
     }
   }
 
-  changeInputStatus(id: any) {
+  changeInputStatus(id: any, color:any) {
     if (this.active === 1) {
       this.active = 0;
     } else {

@@ -177,6 +177,21 @@ i.zmdi.zmdi-mail-send {
   overflow: auto;
 }
 
+.message-container::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+  background-color: #454545;
+}
+
+.message-container::-webkit-scrollbar {
+  width: 10px;
+  background-color: #F5F5F5;
+}
+
+.message-container::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+  border-radius: 25px;
+}
+
 .pseudo-container {
   display: flex;
   flex-direction: column;
@@ -195,6 +210,21 @@ i.zmdi.zmdi-mail-send {
   text-align: center;
   border-radius: 5px;
   background-color: #454545;
+}
+
+.pseudo::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+  background-color: #454545;
+}
+
+.pseudo::-webkit-scrollbar {
+  width: 10px;
+  background-color: #F5F5F5;
+}
+
+.pseudo::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+  border-radius: 25px;
 }
 
 .pseudo-chat {
