@@ -25,11 +25,13 @@
 
     <!--    <input type="text" (keyup)="$event.keyCode == 13 && editDoc(docId, $event)">-->
 
-    <i *ngIf="docId != 'general'" class="zmdi zmdi-edit" (keyup)="$event.keyCode == 13 && editDoc(docId, $event)"></i>
+    <i *ngIf="docId != 'general'" class="zmdi zmdi-edit" (click)="editDoc(docId, $event)"></i>
 
     <div *ngIf="docId != 'general'" class="input-color-container">
       <input class="input-color" type="color" id='{{ id }}' [value]='generateHex(docId)'>
     </div>
+
+    <i *ngIf="docId != 'general'" class="zmdi zmdi-close-circle" (keyup)="$event.keyCode == 13 && editDoc(docId, $event)"></i>
 
   </span>
 </div>
