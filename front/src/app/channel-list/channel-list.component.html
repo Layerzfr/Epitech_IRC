@@ -27,7 +27,7 @@
     <i *ngIf="docId != 'general'" class="zmdi zmdi-edit" (click)="editDoc(docId, $event)"></i>
 
     <div *ngIf="docId.id != 'general'" class="input-color-container">
-      <input class="input-color" type="color" id='{{ id }}' [value]='docId.color'>
+      <input class="input-color" type="color" id='{{ id }}' [value]='docId.color' (change)="editColorDoc(docId.id, $event.target.value)">
     </div>
 
 

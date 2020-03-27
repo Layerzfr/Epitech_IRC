@@ -36,6 +36,10 @@ export class ChannelService {
     this.socket.emit('editDoc', doc);
   }
 
+  editColor(documentId, color) {
+    this.socket.emit('editColor', [documentId, color]);
+  }
+
   deleteDocument(documentId) {
     this.socket.emit('deleteDoc', documentId);
   }

@@ -199,6 +199,32 @@ io.on("connection", socket => {
         console.log(documents);
     });
 
+    socket.on("editColor", doc => {
+        colors[doc[0]] = doc[1];
+        documents[doc[0]].color = doc[1];
+        // documents[doc[0]] = documents[doc['previous']];
+        // io.emit("documents", Object.values(documents));
+        console.log(documents);
+
+        var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
+            parsed = JSON.parse(JSON.stringify(jsonString));
+            parsed = parsed.replace(/}{/g, ",\n");
+            parsed = JSON.parse(parsed);
+
+            parsed[doc[0]].data.color = doc[1];
+            fs.writeFile('data.json', JSON.stringify(parsed, null, 2), (err) => {
+                if (err) throw err;
+                // console.log('Data written to file');
+            });
+            io.emit("documents", Object.values(documents));
+
+            if (err) {
+                console.log("File read failed:", err)
+                return
+            }
+        });
+    });
+
     socket.on('disconnect', function(){
         console.log('user disconnected');
 
