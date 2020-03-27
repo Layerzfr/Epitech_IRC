@@ -76,7 +76,20 @@ io.on("connection", socket => {
 
     socket.on("leave", data => {
         socket.leave(data.id);
-        io.to(data.id).emit("new-message", "["+data.id+"] "+ data.user + " vient de quitter le salon");
+        var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
+            parsed = JSON.parse(JSON.stringify(jsonString));
+            parsed = parsed.replace(/}{/g, ",\n");
+            parsed = JSON.parse(parsed);
+            var color = parsed[data.id]['data']['color'];
+            io.to(data.id).emit("new-message", "<p style='color: "+color+"'>["+data.id+"] </p>"+ data.user + " vient de quitter le salon");
+            people[socket.id] = data.user;
+            io.to("general").emit('new-message', '[general] ' + data.user + ' vient de rejoindre le salon');
+            if (err) {
+                console.log("File read failed:", err)
+                return
+            }
+        });
+        io.to(data.id).emit("new-message", "<p style='color: '>["+data.id+"] </p>"+ data.user + " vient de quitter le salon");
         io.to(socket.id).emit("new-message", "Vous avez quitté le salon " + data.id);
     });
 
