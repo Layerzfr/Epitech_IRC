@@ -11,6 +11,21 @@ var channelList = {};
 
 var done = false;
 
+var colors = {}
+
+function generateHex(channel) {
+    let hex = '#';
+    if (!colors[channel]) {
+        let length = 6;
+        let chars = '0123456789ABCDEF';
+        while (length--) {
+            hex += chars[(Math.random() * 16) | 0];
+        }
+        colors[channel] = hex;
+    }
+    return colors[channel];
+}
+
 io.on("connection", socket => {
     let previousId;
 
@@ -23,19 +38,21 @@ io.on("connection", socket => {
     console.log('a user connected');
     documents["general"] = {
         id: 'general',
-        doc: ''
+        doc: '',
+        color: "#818181"
     };
 
     safeJoin("general");
-    io.emit("documents", Object.keys(documents));
+    io.emit("documents", Object.values(documents));
     socket.emit("document", documents["general"]);
 
 
-    io.emit("documents", Object.keys(documents));
+    io.emit("documents", Object.values(documents));
     previousId = "general";
     socket.emit("document", {
         id: "general",
-        doc: ''
+        doc: '',
+        color: "#818181"
     });
 
     socket.on("new-user", username => {
@@ -94,9 +111,12 @@ io.on("connection", socket => {
     });
 
     socket.on("addDoc", doc => {
+        doc.color = generateHex(doc.id);
         documents[doc.id] = doc;
         // safeJoin(doc.id);
-        io.emit("documents", Object.keys(documents));
+        io.emit("documents", Object.values(documents));
+        console.log(documents);
+
         // socket.emit("document", doc);
 
         var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
@@ -106,7 +126,7 @@ io.on("connection", socket => {
 
             parsed[doc.id] = {
                 "data": {
-                    "color" : "#75CAFE",
+                    "color" : doc.color,
                     "creator": people[socket.id],
                 }
             };
@@ -178,7 +198,7 @@ io.on("connection", socket => {
         documents[doc['new']] = documents[doc['previous']];
         documents[doc['new']].id = doc['new'];
         delete(documents[doc['previous']]);
-        io.emit("documents", Object.keys(documents));
+        io.emit("documents", Object.values(documents));
         console.log(documents);
     });
 
@@ -190,7 +210,7 @@ io.on("connection", socket => {
         }
     });
 
-    io.emit("documents", Object.keys(documents));
+    io.emit("documents", Object.values(documents));
 
     socket.on('new-message', (message) => {
         console.log(message);
