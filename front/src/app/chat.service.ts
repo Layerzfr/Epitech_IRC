@@ -10,6 +10,7 @@ import {userName} from "./connexion/connexion.component";
 })
 export class ChatService {
   messageList:  [][] = [];
+  userList: [][] = [];
   constructor(private socket: Socket) { }
   public sendMessage(message) {
     // console.log(currentDoc);
@@ -20,6 +21,20 @@ export class ChatService {
     };
     this.socket.emit('new-message', messages);
   }
+
+  public getUsersList = () => {
+    return new Observable((observer: Observer<any>) => {
+      this.socket.on('userList', (user) => {
+        let test = [user];
+        this.userList = test;
+        observer.next(user);
+      });
+      // observer.next();
+      // observer.complete();
+    });
+
+  }
+
   public getMessages = () => {
     return new Observable((observer: Observer<any>) => {
       this.socket.on('new-message', (message) => {

@@ -47,6 +47,8 @@ io.on("connection", socket => {
     socket.emit("document", documents["general"]);
 
 
+
+
     io.emit("documents", Object.values(documents));
     previousId = "general";
     socket.emit("document", {
@@ -76,6 +78,7 @@ io.on("connection", socket => {
                 }
             }
             people[socket.id] = username;
+            io.emit("userList", Object.values(people))
             io.to("general").emit('new-message', [ username + ' vient de rejoindre le salon', "general", "#FFFFFF"]);
             if (err) {
                 console.log("File read failed:", err)
@@ -230,6 +233,8 @@ io.on("connection", socket => {
 
         if(people[socket.id] !== undefined) {
             io.to("general").emit('new-message', [people[socket.id] + " vient de quitter le salon", "general", "#FFFFFF"]);
+            delete people[socket.id];
+            io.emit("userList", Object.values(people))
         }
     });
 

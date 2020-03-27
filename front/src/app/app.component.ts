@@ -14,6 +14,7 @@ export class AppComponent implements OnInit, AfterViewChecked{
     [x: string]: any;
   newMessage: string;
   messageList:  string[] = [];
+  userList:  string[] = [];
 
   constructor(private chatService: ChatService) {
   }
@@ -24,6 +25,12 @@ export class AppComponent implements OnInit, AfterViewChecked{
   }
   ngOnInit() {
     this.scrollToBottom();
+    this.chatService
+      .getUsersList()
+      .subscribe((user: string) => {
+        let test = [user];
+        this.userList = test;
+      });
     this.chatService
       .getMessages()
       .subscribe((message: string) => {
