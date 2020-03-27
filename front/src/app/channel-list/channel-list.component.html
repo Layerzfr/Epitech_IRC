@@ -16,7 +16,7 @@
     </section>
 
     <ng-template [ngIf]="docId.id != 'general'" [ngIfElse]="general">
-      <p class="channel-name" [ngStyle]="{'color': docId.color}" id="{{ docId.id }}">{{ docId.id }}</p>
+      <input  class="channel-name ng-pristine ng-invalid ng-invalid-required ng-touched" [attr.disabled] = "active === 1 ? 'disabled' : null" [ngStyle]="{'color': docId.color}" id="{{ docId.id }}" placeholder="{{ docId.id }}" (keyup)="$event.keyCode == 13 && editDoc(docId.id, $event)">
     </ng-template>
     <ng-template #general>
       <p class="channel-name-general">{{ docId.id }}</p>
@@ -24,13 +24,13 @@
 
     <!--    <input type="text" (keyup)="$event.keyCode == 13 && editDoc(docId.id, $event)">-->
 
-    <i *ngIf="docId != 'general'" class="zmdi zmdi-edit" (click)="editDoc(docId, $event)"></i>
+    <i *ngIf="docId.id != 'general'" class="zmdi zmdi-edit" (click)="changeInputStatus(docId.id)"></i>
 
     <div *ngIf="docId.id != 'general'" class="input-color-container">
       <input class="input-color" type="color" id='{{ id }}' [value]='docId.color'>
     </div>
 
-    <i *ngIf="docId != 'general'" class="zmdi zmdi-close-circle" (keyup)="$event.keyCode == 13 && editDoc(docId, $event)"></i>
+    <i *ngIf="docId.id != 'general'" class="zmdi zmdi-close-circle" (keyup)="$event.keyCode == 13 && editDoc(docId, $event)"></i>
 
   </span>
 </div>
