@@ -36,6 +36,11 @@ export class ChannelService {
     this.socket.emit('editDoc', doc);
   }
 
+  deleteDocument(documentId) {
+    this.socket.emit('deleteDoc', documentId);
+  }
+
+
   private docId() {
     let text = '';
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

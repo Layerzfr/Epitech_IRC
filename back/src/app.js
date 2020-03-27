@@ -139,17 +139,20 @@ io.on("connection", socket => {
         });
     });
 
-    socket.on('delete room', function(channel){
-        io.of('/').in(channel).clients(function(error, clients) {
+    socket.on('deleteDoc', function(channel){
+        console.log("delete");
+        io.in(channel).clients(function(error, clients) {
             if (clients.length > 0) {
                 clients.forEach(function (socket_id) {
                     io.sockets.sockets[socket_id].leave(channel);
                     io.sockets.sockets[socket_id].emit('leave',channel);
                 });
-                var msg = {content: "L'admin a supprimé le channel "+ channel, channel:'general'}
-                socket.broadcast.emit('chat message',msg);
             }
+            var msg = {content: "L'admin a supprimé le channel "+ channel, channel:'general'}
+            io.to("general").emit('new-message', [msg.content, msg.channel, "#FFFFFF"]);
         });
+        delete documents[channel];
+        io.emit("documents", Object.values(documents));
     });
 
     socket.on('message privé', function(MP){

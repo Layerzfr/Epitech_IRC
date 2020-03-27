@@ -32,7 +32,7 @@
 
 
     <i *ngIf="docId != 'general'" class="zmdi zmdi-close-circle"
-       (keyup)="$event.keyCode == 13 && editDoc(docId, $event)"></i>
+       (click)="deleteDoc(docId.id)"></i>
     </div>
   </span>
 </div>

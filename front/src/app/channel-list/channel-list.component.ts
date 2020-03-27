@@ -54,6 +54,10 @@ export class ChannelListComponent implements OnInit, OnDestroy {
         this.channelService.editDocument(id, newId.target.value);
     }
 
+  deleteDoc(id: string) {
+    this.channelService.deleteDocument(id);
+  }
+
     newDoc() {
         this.channelService.newDocument();
     }
