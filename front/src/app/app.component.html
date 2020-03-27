@@ -10,7 +10,7 @@
         <div *ngFor="let message of messageList">
           <div class='message-unique'>
             <div class="trait"></div>
-            <p style="margin-left: 58px">{{message}}</p>
+            <p style="margin-left: 58px" > <span [ngStyle]="{'color': message[2]}"> [{{message[1]}}] </span> {{message[0]}}</p>
           </div>
         </div>
       </div>
