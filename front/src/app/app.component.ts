@@ -1,20 +1,23 @@
 import {Component, AfterViewChecked, ElementRef, ViewChild, OnInit} from '@angular/core';
-import { ChatService } from './chat.service';
+import {ChatService} from './chat.service';
 import {userName} from "./connexion/connexion.component";
+import {message} from "./channel-list/channel-list.component";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewChecked{
+export class AppComponent implements OnInit, AfterViewChecked {
 
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
 
-    [x: string]: any;
+  [x: string]: any;
+
   newMessage: string;
-  messageList:  string[] = [];
-  userList:  string[] = [];
+  messageList: string[] = [];
+  userList: string[] = [];
+  textinput: any = null;
 
   constructor(private chatService: ChatService) {
   }
@@ -22,7 +25,9 @@ export class AppComponent implements OnInit, AfterViewChecked{
   sendMessage() {
     this.chatService.sendMessage(this.newMessage);
     this.newMessage = '';
+    console.log(this.textinput);
   }
+
   ngOnInit() {
     this.scrollToBottom();
     this.chatService
@@ -45,6 +50,13 @@ export class AppComponent implements OnInit, AfterViewChecked{
   scrollToBottom(): void {
     try {
       this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-    } catch(err) { }
+    } catch (err) {
+    }
+  }
+
+  messageHolder() {
+    this.textinput = message;
+    console.log(this.textinput);
+    return '/' + this.textinput;
   }
 }

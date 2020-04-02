@@ -3,6 +3,7 @@ $add-button-color: #376e25; // Change Me
 
 .sidenav {
   .text-sideNav {
+    cursor: pointer;
     padding: 8px 15px 8px 8px;
     text-decoration: none;
     font-size: 20px;
@@ -39,6 +40,7 @@ $add-button-color: #376e25; // Change Me
 }
 
 .channel-name {
+  cursor: pointer;
   margin-left: 20%;
   margin-right: 5%;
   margin-bottom: 0;
@@ -50,7 +52,6 @@ $add-button-color: #376e25; // Change Me
   font-weight: 400;
   font-size: 20px;
   text-align: start;
-  cursor: default;
   resize: none;
 }
 
@@ -64,6 +65,11 @@ $add-button-color: #376e25; // Change Me
   margin-bottom: 0;
   margin-top: 0;
   color: white;
+}
+
+.channel-name-general:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .channel-name-general::-webkit-scrollbar-track

@@ -6,7 +6,7 @@
     </a>
   </div>
 
-  <span class="text-sideNav" *ngFor='let docId of documents | async'>
+  <span (click)="NameMessage(docId.id)" class="text-sideNav" *ngFor='let docId of documents | async'>
 
       <section title=".squaredThree">
         <div class="squaredThree">
@@ -23,7 +23,7 @@
       </section>
 
       <ng-template [ngIf]="docId.id != 'general' && docId.username == getUsername()" [ngIfElse]="general">
-        <input  class="channel-name ng-pristine ng-invalid ng-invalid-required ng-touched" [attr.disabled] = "active === 1 ? 'disabled' : null" [ngStyle]="{'color': docId.color}" placeholder="{{ docId.id }}" (keyup)="$event.keyCode == 13 && editDoc(docId.id, $event)">
+        <input class="channel-name ng-pristine ng-invalid ng-invalid-required ng-touched" [attr.disabled] = "active === 1 ? 'disabled' : null" [ngStyle]="{'color': docId.color}" placeholder="{{ docId.id }}" (keyup)="$event.keyCode == 13 && editDoc(docId.id, $event)">
       </ng-template>
       <ng-template #general>
         <p class="channel-name-general" [ngStyle]="{'margin-left': '15px', 'color': docId.color}">{{ docId.id }}</p>

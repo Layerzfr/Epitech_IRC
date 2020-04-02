@@ -5,6 +5,7 @@ import {Observable, Subscription} from 'rxjs';
 import {ChannelService} from "../channel.service";
 
 export let currentDoc: string;
+export let message: any;
 
 @Component({
   selector: 'app-document-list',
@@ -24,6 +25,7 @@ export class ChannelListComponent implements OnInit, OnDestroy {
   private _docSub: Subscription;
   active: number = 1;
   username = userName;
+  TESSST:any;
 
   constructor(private channelService: ChannelService, private connexionComponent: ConnexionComponent) {
   }
@@ -98,6 +100,18 @@ export class ChannelListComponent implements OnInit, OnDestroy {
       this.active = 0;
     } else {
       this.active = 1;
+    }
+  }
+
+  NameMessage(id:any) {
+    if (message == id) {
+      this.TESSST = message;
+      message = id + ' ';
+      return this.TESSST;
+    } else {
+      this.TESSST = null;
+      message = id;
+      return message;
     }
   }
 

@@ -18,8 +18,8 @@
     </div>
 
     <div class="flex-input">
-      <input class="input-message" [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()"
-             placeholder="Tap message"/>
+      <input type="text" class="input-message" [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()"
+             placeholder="Tap message" name="value" value="{{messageHolder()}}" id="inputMessage"/>
       <button class="send" (click)="sendMessage()">
         <i class="zmdi zmdi-mail-send"></i>
       </button>
