@@ -301,8 +301,14 @@ io.on("connection", socket => {
             }
             if(getKey(people, message.message.split(" ")[1]) !== undefined) {
                 var dest = getKey(people, message.message.split(" ")[1]);
-                io.to(dest).emit('new-message', [null,null,people[socket.id] + " >> VOUS : " + message.message.split(" ")[2], "MP", "#000000"]);
-                io.to(socket.id).emit('new-message', [null,null, "VOUS >> " + people[dest] +  ": " + message.message.split(" ")[2], "MP", "#000000"]);
+                var string = "";
+                for(let i = 2; message.message.split(" ")[i]; i++) {
+                    string = string.concat(" ", message.message.split(" ")[i]);
+                    console.log("LE TEST",string);
+                }
+                console.log("LLLLLLL", string)
+                io.to(dest).emit('new-message', [null,null,people[socket.id] + " >> VOUS : " + string, "MP", "#000000"]);
+                io.to(socket.id).emit('new-message', [null,null, "VOUS >> " + people[dest] +  ": " + string, "MP", "#000000"]);
                 return;
             } else {
                 io.to(socket.id).emit('new-message', [null,null,"Utilisateur introuvable", "info", "#000000"]);
