@@ -11,21 +11,7 @@
         <div *ngFor="let message of messageList">
           <div class='message-unique'>
             <div class="trait"></div>
-            <p style="margin-left: 58px"><span [ngStyle]="{'color': message[2]}"> [{{message[1]}}
-              ] </span> {{message[0]}}</p>
-          </div>
-        </div>
-      </div>
-      <div class="pseudo-container">
-        <div class="pseudo">
-          <p class="title">Online</p>
-          <div *ngFor="let user of userList">
-            <div *ngFor="let username of user">
-              <p class="pseudo-name">
-                {{username}}
-              </p>
-            </div>
-
+            <p style="margin-left: 58px; margin-right: 58px; color: #B0B0B0"><span [ngStyle]="{'color': message[2]}"> [{{message[1]}}] </span>{{message[0]}}</p>
           </div>
         </div>
       </div>
@@ -37,6 +23,19 @@
       <button class="send" (click)="sendMessage()">
         <i class="zmdi zmdi-mail-send"></i>
       </button>
+    </div>
+  </div>
+  <div class="pseudo-container">
+    <div class="pseudo">
+      <p class="title">Online</p>
+      <div *ngFor="let user of userList">
+        <div *ngFor="let username of user">
+          <p class="pseudo-name">
+            {{username}}
+          </p>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>

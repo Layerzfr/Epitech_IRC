@@ -25,9 +25,9 @@ $width: 550px; // Change Me
   display: flex;
   flex-direction: column;
   justify-items: center;
-  right: 0;
+  right: 15%;
   position: fixed;
-  width: 85%;
+  width: 70%;
   height: 100%;
 }
 
@@ -59,14 +59,17 @@ $width: 550px; // Change Me
 }
 
 .input-message {
+  margin-top: auto;
+  margin-bottom: auto;
   border: none;
-  width: 90%;
+  width: 100%;
   height: 50px;
   background-color: #454545;
   padding-left: 50px;
+  padding-right: 50px;
   color: white;
-  font-family: 'Roboto', sans-serif;
-  font-size: $width/35;
+  font-family: "Roboto", sans-serif;
+  font-size: 15.7142857143px;
   font-weight: 400;
   border-radius: 5px;
   margin-left: 8px;
@@ -97,6 +100,8 @@ $width: 550px; // Change Me
 }
 
 .send {
+  margin-top: auto;
+  margin-bottom: auto;
   background: #454545;
   height: 51.94px;
   border: 0;
@@ -143,7 +148,7 @@ i.zmdi.zmdi-mail-send {
 .flex-input {
   display: flex;
   flex-direction: row;
-  width: 85%;
+  width: 70%;
   position: fixed;
   height: 8%;
   bottom: 0;
@@ -152,7 +157,7 @@ i.zmdi.zmdi-mail-send {
 .message-send {
   display: flex;
   position: fixed;
-  width: 85%;
+  width: 70%;
   align-content: flex-end;
   height: 92%;
   bottom: 8%;
@@ -172,7 +177,7 @@ i.zmdi.zmdi-mail-send {
 .message-container {
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 100%;
   height: 100%;
   overflow: auto;
 }
@@ -193,11 +198,16 @@ i.zmdi.zmdi-mail-send {
 }
 
 .pseudo-container {
+  z-index: 100;
   display: flex;
   flex-direction: column;
-  width: 20%;
+  justify-items: center;
+  right: 0;
+  overflow: overlay;
+  position: fixed;
+  width: 15%;
   height: 100%;
-  overflow: auto;
+  background-color: #454545;
 }
 
 .pseudo {
