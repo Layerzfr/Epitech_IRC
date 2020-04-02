@@ -1,5 +1,10 @@
 <div class='sidenav'>
-  <span class="new-channel" (click)='newDoc()'>Nouveau channel </span>
+  <div class="create-channel">
+    <a class="bt more-bt" href="javascript:void(0)" (click)='newDoc()'>
+      <span class="fl"></span><span class="sfl"></span><span class="cross"></span><i></i>
+      <p>Nouveau channel</p>
+    </a>
+  </div>
 
   <span class="text-sideNav" *ngFor='let docId of documents | async'>
 
@@ -24,7 +29,7 @@
         <p class="channel-name-general" [ngStyle]="{'margin-left': '15px', 'color': docId.color}">{{ docId.id }}</p>
       </ng-template>
 
-      <div *ngIf="docId.username == getUsername()" ngIfElse style="display: inherit">
+      <div *ngIf="docId.username == getUsername()" ngIfElse style="display: inherit; margin-right: 5%;">
         <i *ngIf="docId != 'general'" class="zmdi zmdi-edit" (click)="changeInputStatus(docId.id, docId.color)"></i>
 
         <div *ngIf="docId.id != 'general'" class="input-color-container">
