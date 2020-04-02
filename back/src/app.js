@@ -9,6 +9,8 @@ var curChannel = 'general';
 var people = {};
 var channelList = {};
 
+var channelUsers = {};
+
 var done = false;
 
 var colors = {};
@@ -20,6 +22,7 @@ var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
     for( let prop in parsed ){
         let color = "#ffffff";
         let creator = "";
+        channelUsers[prop] = [];
         if(parsed[prop]["data"]) {
             color = parsed[prop]["data"]["color"];
 
@@ -121,12 +124,21 @@ io.on("connection", socket => {
         socket.emit("document", documents[docId]);
     });
 
+    // socket.on("getUserForChannel", docId => {
+    //     safeJoin(docId);
+    //     socket.emit("document", documents[docId]);
+    // });
+
     socket.on("join", data => {
+        channelUsers[data.id].push(socket.id);
+        console.log(channelUsers);
         socket.join(data.id);
         io.to(data.id).emit("new-message", [data.user + " vient de rejoindre le salon", data.id, colors[data.id]]);
     });
 
     socket.on("leave", data => {
+        channelUsers[data.id] = channelUsers[data.id].filter(item => item !== socket.id);
+        console.log(channelUsers);
         socket.leave(data.id);
 
         io.to(data.id).emit("new-message", [data.user + " vient de quitter le salon", data.id, colors[data.id]]);
@@ -139,8 +151,6 @@ io.on("connection", socket => {
         // safeJoin(doc.id);
         io.emit("documents", Object.values(documents));
         console.log(documents);
-
-        // socket.emit("document", doc);
 
         var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
             parsed = JSON.parse(JSON.stringify(jsonString));
@@ -160,7 +170,6 @@ io.on("connection", socket => {
                 console.log('Data written to file');
             });
 
-            // fs.appendFileSync('data.json', JSON.stringify(parsed, null, 2));
             if (err) {
                 console.log("File read failed:", err)
                 return
@@ -189,7 +198,6 @@ io.on("connection", socket => {
                 delete parsed[channel];
                 fs.writeFile('data.json', JSON.stringify(parsed, null, 2), (err) => {
                     if (err) throw err;
-                    // console.log('Data written to file');
                 });
             }
         });
@@ -236,25 +244,16 @@ io.on("connection", socket => {
         documents[doc['new']].id = doc['new'];
         colors[doc['new']] = colors[doc['previous']];
         delete[doc['previous']];
-        // socket.room = doc['new'];
         io.in(doc['previous']).clients(function(error, clients) {
             if (clients.length > 0) {
                 clients.forEach(function (socket_id) {
-                    // socket.leave(doc['previous']);
-                    // io.sockets.sockets[socket_id].emit("join", {id: documents["general"], user: people[socket_id]});
-                    // io.sockets.sockets[socket_id].emit("document", documents["general"]);
                     console.log(documents["general"]);
-                    // previousId = doc['previous'];
                     io.sockets.sockets[socket_id].leave(doc['previous']);
                     io.sockets.sockets[socket_id].join("general");
                     io.sockets.sockets[socket_id].join(doc['new']);
-                    // console.log(doc['previous']),
-                    // console.log("bite");
                 });
             }
         });
-        // documents[doc['new']] = documents[doc['previous']];
-        // documents[doc['new']].id = doc['new'];
         delete(documents[doc['previous']]);
         var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
             parsed = JSON.parse(JSON.stringify(jsonString));
@@ -270,7 +269,6 @@ io.on("connection", socket => {
                 console.log('Data written to file');
             });
 
-            // fs.appendFileSync('data.json', JSON.stringify(parsed, null, 2));
             if (err) {
                 console.log("File read failed:", err)
                 return
@@ -283,9 +281,6 @@ io.on("connection", socket => {
     socket.on("editColor", doc => {
         colors[doc[0]] = doc[1];
         documents[doc[0]].color = doc[1];
-        // documents[doc[0]] = documents[doc['previous']];
-        // io.emit("documents", Object.values(documents));
-        console.log(documents);
 
         var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
             parsed = JSON.parse(JSON.stringify(jsonString));
@@ -295,7 +290,6 @@ io.on("connection", socket => {
             parsed[doc[0]].data.color = doc[1];
             fs.writeFile('data.json', JSON.stringify(parsed, null, 2), (err) => {
                 if (err) throw err;
-                // console.log('Data written to file');
             });
             io.emit("documents", Object.values(documents));
 
@@ -358,7 +352,6 @@ io.on("connection", socket => {
 
         var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
             parsed = JSON.parse(JSON.stringify(jsonString));
-            // console.log(parsed);
             parsed = parsed.replace(/}{/g, ",\n");
             parsed = JSON.parse(parsed);
 
@@ -384,10 +377,8 @@ io.on("connection", socket => {
 
             fs.writeFile('data.json', JSON.stringify(parsed, null, 2), (err) => {
                 if (err) throw err;
-                // console.log('Data written to file');
             });
 
-            // fs.appendFileSync('data.json', JSON.stringify(parsed, null, 2));
             if (err) {
                 console.log("File read failed:", err)
                 return

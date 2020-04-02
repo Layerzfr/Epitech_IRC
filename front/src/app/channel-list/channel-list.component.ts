@@ -65,20 +65,6 @@ export class ChannelListComponent implements OnInit, OnDestroy {
     this.channelService.newDocument();
   }
 
-  generateHex(channel: any) {
-    let hex = '#';
-    if (!this.colors[channel]) {
-      console.log(hex);
-      let length = 6;
-      let chars = '0123456789ABCDEF';
-      while (length--) {
-        hex += chars[(Math.random() * 16) | 0];
-      }
-      this.colors[channel] = hex;
-    }
-    return this.colors[channel];
-  }
-
   checkBox(DocId) {
     this.bool = document.getElementById(DocId);
     if (this.bool.checked == true) {
