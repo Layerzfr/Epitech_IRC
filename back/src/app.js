@@ -103,12 +103,12 @@ io.on("connection", socket => {
                     }
                 }
                 for (let message in parsed[prop]) {
-                    io.to(socket.id).emit('new-message', [parsed[prop][message].date , parsed[prop][message].message, prop, color]);
+                    io.to(socket.id).emit('new-message', [parsed[prop][message].by, parsed[prop][message].date , parsed[prop][message].message, prop, color]);
                 }
             }
             people[socket.id] = username;
             io.emit("userList", Object.values(people))
-            io.to("general").emit('new-message', [null, username + ' vient de rejoindre le salon', "general", "#FFFFFF"]);
+            io.to("general").emit('new-message', [null,null, username + ' vient de rejoindre le salon', "general", "#FFFFFF"]);
             if (err) {
                 console.log("File read failed:", err)
                 return
@@ -133,7 +133,7 @@ io.on("connection", socket => {
         channelUsers[data.id].push(socket.id);
         console.log(channelUsers);
         socket.join(data.id);
-        io.to(data.id).emit("new-message", [null,data.user + " vient de rejoindre le salon", data.id, colors[data.id]]);
+        io.to(data.id).emit("new-message", [null,null,data.user + " vient de rejoindre le salon", data.id, colors[data.id]]);
     });
 
     socket.on("leave", data => {
@@ -141,8 +141,8 @@ io.on("connection", socket => {
         console.log(channelUsers);
         socket.leave(data.id);
 
-        io.to(data.id).emit("new-message", [null,data.user + " vient de quitter le salon", data.id, colors[data.id]]);
-        io.to(socket.id).emit("new-message", [null,"Vous avez quitté le salon " + data.id, "info", "#000000"]);
+        io.to(data.id).emit("new-message", [null,null,data.user + " vient de quitter le salon", data.id, colors[data.id]]);
+        io.to(socket.id).emit("new-message", [null,null,"Vous avez quitté le salon " + data.id, "info", "#000000"]);
     });
 
     socket.on("addDoc", doc => {
@@ -189,7 +189,7 @@ io.on("connection", socket => {
                 });
             }
             var msg = {content: "L'admin a supprimé le channel "+ channel, channel:'general'}
-            io.to("general").emit('new-message', [null,msg.content, msg.channel, "#FFFFFF"]);
+            io.to("general").emit('new-message', [null,null,msg.content, msg.channel, "#FFFFFF"]);
         });
         delete documents[channel];
         var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
@@ -272,7 +272,7 @@ io.on("connection", socket => {
         console.log('user disconnected');
 
         if(people[socket.id] !== undefined) {
-            io.to("general").emit('new-message', [null,people[socket.id] + " vient de quitter le salon", "general", "#FFFFFF"]);
+            io.to("general").emit('new-message', [null,null,people[socket.id] + " vient de quitter le salon", "general", "#FFFFFF"]);
             delete people[socket.id];
             io.emit("userList", Object.values(people))
         }
@@ -294,35 +294,35 @@ io.on("connection", socket => {
             var getKey = (obj,val) => Object.keys(obj).find(key => obj[key] === val);
 
             if(getKey(people, message.message.split(" ")[1]) === socket.id) {
-                io.to(socket.id).emit('new-message', [null,"Vous ne pouvez pas vous envoyer des messages à vous même", "info", "#000000"]);
+                io.to(socket.id).emit('new-message', [null,null,"Vous ne pouvez pas vous envoyer des messages à vous même", "info", "#000000"]);
                 return;
             }
             if(getKey(people, message.message.split(" ")[1]) !== undefined) {
                 var dest = getKey(people, message.message.split(" ")[1]);
-                io.to(dest).emit('new-message', [null,people[socket.id] + " >> VOUS : " + message.message.split(" ")[2], "MP", "#000000"]);
-                io.to(socket.id).emit('new-message', [null, "VOUS >> " + people[dest] +  ": " + message.message.split(" ")[2], "MP", "#000000"]);
+                io.to(dest).emit('new-message', [null,null,people[socket.id] + " >> VOUS : " + message.message.split(" ")[2], "MP", "#000000"]);
+                io.to(socket.id).emit('new-message', [null,null, "VOUS >> " + people[dest] +  ": " + message.message.split(" ")[2], "MP", "#000000"]);
                 return;
             } else {
-                io.to(socket.id).emit('new-message', [null,"Utilisateur introuvable", "info", "#000000"]);
+                io.to(socket.id).emit('new-message', [null,null,"Utilisateur introuvable", "info", "#000000"]);
                 return;
             }
         }
         if(message.message[0] === "/" && !documents[command.substring(1)]) {
-            io.to(socket.id).emit('new-message', [null,"Commande ou salon introuvable", "info", "#000000"]);
+            io.to(socket.id).emit('new-message', [null,null,"Commande ou salon introuvable", "info", "#000000"]);
             return;
         }
         if(documents[command.substring(1)]) {
             message.id = command.substring(1);
             message.message = message.message.replace(command, '');
             if(!io.sockets.adapter.rooms[message.id]) {
-                io.to(socket.id).emit('new-message', [null,"Vous n'appartenez pas à ce channel.", "info", "#000000"]);
+                io.to(socket.id).emit('new-message', [null,null,"Vous n'appartenez pas à ce channel.", "info", "#000000"]);
                 return;
             }
             var roster = io.sockets.adapter.rooms[message.id].sockets;
             console.log(roster);
             var isInRoom = false;
             if(!roster[socket.id]) {
-                io.to(socket.id).emit('new-message', [null,"Vous n'appartenez pas à ce channel.", "info", "#000000"]);
+                io.to(socket.id).emit('new-message', [null,null,"Vous n'appartenez pas à ce channel.", "info", "#000000"]);
                 return;
             }
         }
@@ -332,7 +332,7 @@ io.on("connection", socket => {
         {
             message.id = "general";
         }
-        io.to(message.id).emit('new-message', [today + ': ' + people[socket.id] + ': ', message.message, message.id, colors[message.id]]);
+        io.to(message.id).emit('new-message', [people[socket.id], today, message.message, message.id, colors[message.id]]);
 
         var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
             parsed = JSON.parse(JSON.stringify(jsonString));
