@@ -4,6 +4,7 @@
   "description": "NotDiscord",
   "dependencies": {
     "back": "file:back",
+    "electron-packager": "^14.2.1",
     "express": "^4.15.2",
     "socket.io": "^2.3.0"
   },
@@ -12,5 +13,8 @@
     "back": "node back/src/app.js",
     "front": "cd front && ng serve",
     "scratch": "node index.js"
+  },
+  "devDependencies": {
+    "electron-installer-dmg": "^3.0.0"
   }
 }
