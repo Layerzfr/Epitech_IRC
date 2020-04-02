@@ -211,6 +211,8 @@ io.on("connection", socket => {
         documents[doc['new']] = documents[doc['previous']];
         documents[doc['new']].id = doc['new'];
         colors[doc['new']] = colors[doc['previous']];
+        channelUsers[doc['new']] = channelUsers[doc['previous']];
+        delete channelUsers[doc['previous']];
         delete[doc['previous']];
         io.in(doc['previous']).clients(function(error, clients) {
             if (clients.length > 0) {
