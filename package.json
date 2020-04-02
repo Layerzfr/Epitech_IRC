@@ -12,5 +12,8 @@
     "back": "node back/src/app.js",
     "front": "cd front && ng serve",
     "scratch": "node index.js"
+  },
+  "devDependencies": {
+    "electron-installer-dmg": "^3.0.0"
   }
 }
