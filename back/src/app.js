@@ -232,10 +232,50 @@ io.on("connection", socket => {
 
     socket.on("editDoc", doc => {
         console.log(doc);
-        socket.room = doc['new'];
         documents[doc['new']] = documents[doc['previous']];
         documents[doc['new']].id = doc['new'];
+        colors[doc['new']] = colors[doc['previous']];
+        delete[doc['previous']];
+        // socket.room = doc['new'];
+        io.in(doc['previous']).clients(function(error, clients) {
+            if (clients.length > 0) {
+                clients.forEach(function (socket_id) {
+                    // socket.leave(doc['previous']);
+                    // io.sockets.sockets[socket_id].emit("join", {id: documents["general"], user: people[socket_id]});
+                    // io.sockets.sockets[socket_id].emit("document", documents["general"]);
+                    console.log(documents["general"]);
+                    // previousId = doc['previous'];
+                    io.sockets.sockets[socket_id].leave(doc['previous']);
+                    io.sockets.sockets[socket_id].join("general");
+                    io.sockets.sockets[socket_id].join(doc['new']);
+                    // console.log(doc['previous']),
+                    // console.log("bite");
+                });
+            }
+        });
+        // documents[doc['new']] = documents[doc['previous']];
+        // documents[doc['new']].id = doc['new'];
         delete(documents[doc['previous']]);
+        var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
+            parsed = JSON.parse(JSON.stringify(jsonString));
+            parsed = parsed.replace(/}{/g, ",\n");
+            parsed = JSON.parse(parsed);
+
+            parsed[doc['new']] = parsed[doc['previous']];
+            delete(parsed[doc['previous']]);
+
+
+            fs.writeFile('data.json', JSON.stringify(parsed, null, 2), (err) => {
+                if (err) throw err;
+                console.log('Data written to file');
+            });
+
+            // fs.appendFileSync('data.json', JSON.stringify(parsed, null, 2));
+            if (err) {
+                console.log("File read failed:", err)
+                return
+            }
+        });
         io.emit("documents", Object.values(documents));
         console.log(documents);
     });

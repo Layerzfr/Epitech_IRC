@@ -49,7 +49,7 @@ export class ChannelListComponent implements OnInit, OnDestroy {
   }
 
   editDoc(id: string, newId) {
-    currentDoc = id;
+    currentDoc = "general";
     this.channelService.editDocument(id, newId.target.value);
   }
 
