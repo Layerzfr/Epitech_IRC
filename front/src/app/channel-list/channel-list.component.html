@@ -6,11 +6,12 @@
       <section title=".squaredThree">
         <div class="squaredThree">
           <ng-template [ngIf]="docId.id != 'general'" [ngIfElse]="channel">
-            <input type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)"/>
+            <input *ngIf="docId.username == getUsername()" type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)" checked/>
+            <input *ngIf="docId.username != getUsername()" type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)"/>
              <label for="{{docId.id}}"></label>
           </ng-template>
           <ng-template #channel>
-            <input type="checkbox" name="check" value="0" (click)="checkBox(docId.id)" checked/>
+            <input type="checkbox" name="check" value="0" checked/>
              <label for="{{docId.id}}"></label>
           </ng-template>
         </div>

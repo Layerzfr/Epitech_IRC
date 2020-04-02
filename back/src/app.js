@@ -11,7 +11,29 @@ var channelList = {};
 
 var done = false;
 
-var colors = {}
+var colors = {};
+
+var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
+    parsed = JSON.parse(JSON.stringify(jsonString));
+    parsed = parsed.replace(/}{/g, ",\n");
+    parsed = JSON.parse(parsed);
+    for( let prop in parsed ){
+        let color = "#ffffff";
+        let creator = "";
+        if(parsed[prop]["data"]) {
+            color = parsed[prop]["data"]["color"];
+
+            creator = parsed[prop]["data"]["creator"];
+        }
+        documents[prop] = {
+            id: prop,
+            doc: '',
+            color: color,
+            username: creator,
+        };
+        colors[prop] = color;
+    }
+});
 
 function generateHex(channel) {
     let hex = '#';
@@ -28,7 +50,6 @@ function generateHex(channel) {
 
 io.on("connection", socket => {
     let previousId;
-
     const safeJoin = currentId => {
         socket.leave(previousId);
         socket.join(currentId);
@@ -63,6 +84,11 @@ io.on("connection", socket => {
             parsed = parsed.replace(/}{/g, ",\n");
             parsed = JSON.parse(parsed);
             for( let prop in parsed ){
+                if(parsed[prop]["data"]) {
+                    if(parsed[prop]["data"]["creator"] == username) {
+                        socket.join(prop);
+                    }
+                }
                 if(prop !== "general")
                 {
                     continue;
@@ -155,6 +181,18 @@ io.on("connection", socket => {
             io.to("general").emit('new-message', [msg.content, msg.channel, "#FFFFFF"]);
         });
         delete documents[channel];
+        var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
+            parsed = JSON.parse(JSON.stringify(jsonString));
+            parsed = parsed.replace(/}{/g, ",\n");
+            parsed = JSON.parse(parsed);
+            if(parsed[channel]) {
+                delete parsed[channel];
+                fs.writeFile('data.json', JSON.stringify(parsed, null, 2), (err) => {
+                    if (err) throw err;
+                    // console.log('Data written to file');
+                });
+            }
+        });
         io.emit("documents", Object.values(documents));
     });
 
