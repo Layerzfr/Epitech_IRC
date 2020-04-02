@@ -148,6 +148,8 @@ io.on("connection", socket => {
     socket.on("addDoc", doc => {
         doc.color = generateHex(doc.id);
         documents[doc.id] = doc;
+        channelUsers[doc.id] = [];
+        socket.join(doc.id);
         // safeJoin(doc.id);
         io.emit("documents", Object.values(documents));
         console.log(documents);
