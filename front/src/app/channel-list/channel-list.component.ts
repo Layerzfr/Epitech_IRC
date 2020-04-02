@@ -100,5 +100,4 @@ export class ChannelListComponent implements OnInit, OnDestroy {
       return message;
     }
   }
-
 }

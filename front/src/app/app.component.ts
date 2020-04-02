@@ -18,6 +18,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   messageList: string[] = [];
   userList: string[] = [];
   textinput: any = null;
+  pseudoUser:any = ' ';
 
   constructor(private chatService: ChatService) {
   }
@@ -26,6 +27,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.chatService.sendMessage(this.newMessage);
     this.newMessage = '';
     console.log(this.textinput);
+    this.pseudoUser = ' ';
   }
 
   ngOnInit() {
@@ -55,8 +57,17 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   messageHolder() {
-    this.textinput = message;
-    console.log(this.textinput);
-    return '/' + this.textinput;
+    if (this.pseudoUser == ' ') {
+      this.textinput = message;
+      console.log(this.textinput);
+      return '/' + this.textinput;
+    } else {
+      return '/mp ' + this.pseudoUser + ' ';
+    }
+  }
+
+  sendPrivate(pseudo:any) {
+    console.log(this.pseudoUser);
+    this.pseudoUser = pseudo;
   }
 }

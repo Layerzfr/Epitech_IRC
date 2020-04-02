@@ -30,7 +30,7 @@
       <p class="title">Online</p>
       <div *ngFor="let user of userList">
         <div *ngFor="let username of user">
-          <p class="pseudo-name">
+          <p class="pseudo-name" (click)="sendPrivate(username)">
             {{username}}
           </p>
         </div>
