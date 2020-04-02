@@ -204,40 +204,6 @@ io.on("connection", socket => {
         io.emit("documents", Object.values(documents));
     });
 
-    socket.on('message privé', function(MP){
-        io.to(people[MP.content[1]]).emit('message privé', MP);
-        io.to(people[MP.by]).emit('message privé', MP);
-    });
-
-    socket.on('change name room', function(room){
-        var msg = {content : "L'admin a changé le nom du channel "+ room.actualroom +" en: " + room.nextroom, channel: room}
-        socket.room = room.nextroom;
-        socket.to(room.nextroom).emit('chat message', msg);
-        socket.emit('change', room);
-    });
-
-
-    socket.on('users list', function(content){
-        var msg = {content: "Liste des utilisateurs: "+ Object.keys(people), channel: content.channel};
-        io.to(people[content.pseudo]).emit('chat message', msg);
-    });
-
-    socket.on('channel list', function(content){
-        var room_list = {};
-        var rooms = io.sockets.adapter.rooms;
-
-        for (var room in rooms){
-            if (!rooms[room].hasOwnProperty(room)) {
-                //console.log(rooms[room]);
-                room_list[room] = Object.keys(rooms[room]).length;
-            }
-        }
-        console.log(Object.keys(room_list));
-        var msg = {content: "Liste des channels: " + Object.keys(room_list), channel: content.channel};
-        io.to(people[content.pseudo]).emit('chat message', msg);
-
-    });
-
     socket.on("editDoc", doc => {
         console.log(doc);
         documents[doc['new']] = documents[doc['previous']];
@@ -322,6 +288,23 @@ io.on("connection", socket => {
 
         var command = message.message.split(" ")[0];
         console.log(command.substring(1));
+        if(command === "/mp") {
+            var getKey = (obj,val) => Object.keys(obj).find(key => obj[key] === val);
+
+            if(getKey(people, message.message.split(" ")[1]) === socket.id) {
+                io.to(socket.id).emit('new-message', [null,"Vous ne pouvez pas vous envoyer des messages à vous même", "info", "#000000"]);
+                return;
+            }
+            if(getKey(people, message.message.split(" ")[1]) !== undefined) {
+                var dest = getKey(people, message.message.split(" ")[1]);
+                io.to(dest).emit('new-message', [null,people[socket.id] + " >> VOUS : " + message.message.split(" ")[2], "MP", "#000000"]);
+                io.to(socket.id).emit('new-message', [null, "VOUS >> " + people[dest] +  ": " + message.message.split(" ")[2], "MP", "#000000"]);
+                return;
+            } else {
+                io.to(socket.id).emit('new-message', [null,"Utilisateur introuvable", "info", "#000000"]);
+                return;
+            }
+        }
         if(message.message[0] === "/" && !documents[command.substring(1)]) {
             io.to(socket.id).emit('new-message', [null,"Commande ou salon introuvable", "info", "#000000"]);
             return;
