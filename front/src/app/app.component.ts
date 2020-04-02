@@ -43,6 +43,11 @@ export class AppComponent implements OnInit, AfterViewChecked {
       .subscribe((message: string) => {
         this.messageList.push(message);
       });
+
+  }
+
+  getUsername() {
+    return userName;
   }
 
   ngAfterViewChecked() {

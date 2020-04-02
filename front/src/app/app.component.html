@@ -37,9 +37,16 @@
       <p class="title">Online</p>
       <div *ngFor="let user of userList">
         <div *ngFor="let username of user">
-          <p class="pseudo-name" (click)="sendPrivate(username)">
-            {{username}}
-          </p>
+          <ng-template [ngIf]="username == getUsername()" [ngIfElse]="UserName">
+            <p class="pseudo-MY-name" (click)="sendPrivate(username)">
+              {{username}}
+            </p>
+          </ng-template>
+          <ng-template #UserName>
+            <p class="pseudo-name" (click)="sendPrivate(username)">
+              {{username}}
+            </p>
+          </ng-template>
         </div>
 
       </div>
