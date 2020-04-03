@@ -20,6 +20,21 @@ $width: 550px; // Change Me
   background-color: #454545;
 }
 
+.document-list::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+  background-color: #454545;
+}
+
+.document-list::-webkit-scrollbar {
+  width: 8px;
+  background-color: #F5F5F5;
+}
+
+.document-list::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+  border-radius: 25px;
+}
+
 .center {
   z-index: 100;
   display: flex;
@@ -188,7 +203,8 @@ i.zmdi.zmdi-mail-send {
 }
 
 .message-container::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
+  height: 8px;
   background-color: #F5F5F5;
 }
 
@@ -228,7 +244,7 @@ i.zmdi.zmdi-mail-send {
 }
 
 .pseudo::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
   background-color: #F5F5F5;
 }
 
