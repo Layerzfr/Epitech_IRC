@@ -10,12 +10,28 @@
 
       <section title=".squaredThree">
         <div class="squaredThree">
-          <ng-template [ngIf]="docId.id != 'general'" [ngIfElse]="channel">
-            <input *ngIf="!isInChannel(docId.id)" type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)"/>
-            <input *ngIf="isInChannel(docId.id) || docId.username == getUsername()" type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)" checked/>
+<!--          <ng-template [ngIf]="docId.id != 'general'">-->
+<!--            <input *ngIf="!isInChannel(docId.id)" type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)"/>-->
+<!--            <input *ngIf="isInChannel(docId.id) || docId.username == getUsername()" type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)" checked/>-->
+<!--             <label for="{{docId.id}}"></label>-->
+<!--          </ng-template>-->
+          <ng-template [ngIf]="docId.id != 'general' && !isInChannel(docId.id) && docId.username == getUsername()">
+             <input  type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)" checked/>
              <label for="{{docId.id}}"></label>
           </ng-template>
-          <ng-template #channel>
+          <ng-template [ngIf]="docId.id != 'general' && !isInChannel(docId.id) && docId.username != getUsername()">
+             <input  type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)"/>
+             <label for="{{docId.id}}"></label>
+          </ng-template>
+          <ng-template [ngIf]="docId.id != 'general' && isInChannel(docId.id) && docId.username != getUsername()">
+             <input  type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)" checked/>
+             <label for="{{docId.id}}"></label>
+          </ng-template>
+          <ng-template [ngIf]="docId.id != 'general' && isInChannel(docId.id) && docId.username == getUsername()">
+             <input  type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)" checked/>
+             <label for="{{docId.id}}"></label>
+          </ng-template>
+          <ng-template [ngIf]="docId.id == 'general'">
             <input type="checkbox" name="check" value="0" checked/>
              <label for="{{docId.id}}"></label>
           </ng-template>
