@@ -59,7 +59,6 @@ io.on("connection", socket => {
         previousId = currentId;
     };
 
-    console.log('a user connected');
     documents["general"] = {
         id: 'general',
         doc: '',
@@ -110,7 +109,6 @@ io.on("connection", socket => {
             io.emit("userList", Object.values(people))
             io.to("general").emit('new-message', [null,null, username + ' vient de rejoindre le salon', "general", "#FFFFFF"]);
             if (err) {
-                console.log("File read failed:", err)
                 return
             }
         });
@@ -131,14 +129,12 @@ io.on("connection", socket => {
 
     socket.on("join", data => {
         channelUsers[data.id].push(socket.id);
-        console.log(channelUsers);
         socket.join(data.id);
         io.to(data.id).emit("new-message", [null,null,data.user + " vient de rejoindre le salon", data.id, colors[data.id]]);
     });
 
     socket.on("leave", data => {
         channelUsers[data.id] = channelUsers[data.id].filter(item => item !== socket.id);
-        console.log(channelUsers);
         socket.leave(data.id);
 
         io.to(data.id).emit("new-message", [null,null,data.user + " vient de quitter le salon", data.id, colors[data.id]]);
@@ -152,7 +148,6 @@ io.on("connection", socket => {
         socket.join(doc.id);
         // safeJoin(doc.id);
         io.emit("documents", Object.values(documents));
-        console.log(documents);
 
         var parsed = fs.readFile('./data.json', 'utf8', (err, jsonString) => {
             parsed = JSON.parse(JSON.stringify(jsonString));
@@ -169,18 +164,15 @@ io.on("connection", socket => {
 
             fs.writeFile('data.json', JSON.stringify(parsed, null, 2), (err) => {
                 if (err) throw err;
-                console.log('Data written to file');
             });
 
             if (err) {
-                console.log("File read failed:", err)
                 return
             }
         });
     });
 
     socket.on('deleteDoc', function(channel){
-        console.log("delete");
         io.in(channel).clients(function(error, clients) {
             if (clients.length > 0) {
                 clients.forEach(function (socket_id) {
@@ -207,7 +199,6 @@ io.on("connection", socket => {
     });
 
     socket.on("editDoc", doc => {
-        console.log(doc);
         documents[doc['new']] = documents[doc['previous']];
         documents[doc['new']].id = doc['new'];
         colors[doc['new']] = colors[doc['previous']];
@@ -217,7 +208,6 @@ io.on("connection", socket => {
         io.in(doc['previous']).clients(function(error, clients) {
             if (clients.length > 0) {
                 clients.forEach(function (socket_id) {
-                    console.log(documents["general"]);
                     io.sockets.sockets[socket_id].leave(doc['previous']);
                     io.sockets.sockets[socket_id].join("general");
                     io.sockets.sockets[socket_id].join(doc['new']);
@@ -236,16 +226,13 @@ io.on("connection", socket => {
 
             fs.writeFile('data.json', JSON.stringify(parsed, null, 2), (err) => {
                 if (err) throw err;
-                console.log('Data written to file');
             });
 
             if (err) {
-                console.log("File read failed:", err)
                 return
             }
         });
         io.emit("documents", Object.values(documents));
-        console.log(documents);
     });
 
     socket.on("editColor", doc => {
@@ -264,14 +251,12 @@ io.on("connection", socket => {
             io.emit("documents", Object.values(documents));
 
             if (err) {
-                console.log("File read failed:", err)
                 return
             }
         });
     });
 
     socket.on('disconnect', function(){
-        console.log('user disconnected');
 
         if(people[socket.id] !== undefined) {
             io.to("general").emit('new-message', [null,null,people[socket.id] + " vient de quitter le salon", "general", "#FFFFFF"]);
@@ -291,7 +276,6 @@ io.on("connection", socket => {
         var m = today.getMinutes()
 
         var command = message.message.split(" ")[0];
-        console.log(command.substring(1));
         if(command === "/mp") {
             var getKey = (obj,val) => Object.keys(obj).find(key => obj[key] === val);
 
@@ -304,9 +288,7 @@ io.on("connection", socket => {
                 var string = "";
                 for(let i = 2; message.message.split(" ")[i]; i++) {
                     string = string.concat(" ", message.message.split(" ")[i]);
-                    console.log("LE TEST",string);
                 }
-                console.log("LLLLLLL", string)
                 io.to(dest).emit('new-message', [null,null,people[socket.id] + " >> VOUS : " + string, "MP", "#000000"]);
                 io.to(socket.id).emit('new-message', [null,null, "VOUS >> " + people[dest] +  ": " + string, "MP", "#000000"]);
                 return;
@@ -327,7 +309,6 @@ io.on("connection", socket => {
                 return;
             }
             var roster = io.sockets.adapter.rooms[message.id].sockets;
-            console.log(roster);
             var isInRoom = false;
             if(!roster[socket.id]) {
                 io.to(socket.id).emit('new-message', [null,null,"Vous n'appartenez pas à ce channel.", "info", "#000000"]);
@@ -372,7 +353,6 @@ io.on("connection", socket => {
             });
 
             if (err) {
-                console.log("File read failed:", err)
                 return
             }
         });
