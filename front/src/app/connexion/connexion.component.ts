@@ -30,7 +30,6 @@ export class ConnexionComponent implements OnInit {
     this.value = value.target.value;
     this.bool = false;
     userName = this.value;
-    console.log(userName);
     this.chatService.newConnection(userName);
   }
 

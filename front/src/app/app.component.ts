@@ -26,7 +26,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
   sendMessage() {
     this.chatService.sendMessage(this.newMessage);
     this.newMessage = '';
-    console.log(this.textinput);
     this.pseudoUser = ' ';
   }
 
@@ -64,7 +63,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
   messageHolder() {
     if (this.pseudoUser == ' ') {
       this.textinput = message;
-      console.log(this.textinput);
       return '/' + this.textinput;
     } else {
       return '/mp ' + this.pseudoUser + ' ';
@@ -72,7 +70,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   sendPrivate(pseudo:any) {
-    console.log(this.pseudoUser);
     this.pseudoUser = pseudo;
   }
 }
