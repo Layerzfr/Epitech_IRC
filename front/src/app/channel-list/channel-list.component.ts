@@ -26,6 +26,7 @@ export class ChannelListComponent implements OnInit, OnDestroy {
   active: number = 1;
   username = userName;
   TESSST:any;
+  channels = [];
 
   constructor(private channelService: ChannelService, private connexionComponent: ConnexionComponent) {
   }
@@ -72,7 +73,9 @@ export class ChannelListComponent implements OnInit, OnDestroy {
     if (this.bool.checked == true) {
       this.isChecked = 1;
       this.channelService.join(DocId, userName)
+      this.channels.push(DocId);
     } else {
+      this.channels = this.channels.filter(item => item !== DocId);
       this.channelService.leave(DocId, userName);
       this.isChecked = 0
     }
@@ -86,6 +89,14 @@ export class ChannelListComponent implements OnInit, OnDestroy {
       this.active = 0;
     } else {
       this.active = 1;
+    }
+  }
+
+  isInChannel(DocId: string) {
+    if(this.channels.includes(DocId)) {
+      return true
+    } else {
+      return false;
     }
   }
 
