@@ -1,33 +1,56 @@
-# Epitech_IRC
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-=======
-Require: 
+# IRC
 
-Besoin de Node, npm
+> Epitech Project
 
-/--------------------------------------------------\
+---
 
-installation : `npm run start`
+### Require: 
 
-Pour tester la version from scratch sans angular: `npm run scratch` 
+- [Node]
+- [npm]
 
-Ouvrir une page sur http://localhost:3000/
+---
+
+## How To Use
+
+#### Installation
+
+```
+    npm run start
+```
+
+#### Test
+
+Pour tester la version from scratch sans angular: 
+
+```
+npm run scratch
+``` 
+
+Ouvrir une page sur [http://localhost:3000/]
 
 
-/--------------------------------------------------\
+#### Test +
 
 Pour tester la version angular qui actuellement n'a pas de "chat" mais un système d'édition de document
-( tuto : https://alligator.io/angular/socket-io/)
+( tuto : [https://alligator.io/angular/socket-io/])
 
 Ouvrir deux terminal et:
 
-Dans le premier: `npm run back`
+Dans le premier: 
 
-Dans le second: `npm run front`
+```
+npm run back
+```
 
-Ouvrir une page sur http://localhost:4200/
+Dans le second: 
+
+```
+npm run front
+```
+
+Ouvrir une page sur [http://localhost:4200/]
+
 
 ## Contributors ✨
 
