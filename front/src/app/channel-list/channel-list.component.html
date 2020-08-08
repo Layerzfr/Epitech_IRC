@@ -1,0 +1,60 @@
+<div class='sidenav'>
+  <div class="create-channel">
+    <a class="bt more-bt" href="javascript:void(0)" (click)='newDoc()'>
+      <span class="fl"></span><span class="sfl"></span><span class="cross"></span><i></i>
+      <p>Nouveau channel</p>
+    </a>
+  </div>
+
+  <span (click)="NameMessage(docId.id)" class="text-sideNav" *ngFor='let docId of documents | async'>
+
+      <section title=".squaredThree">
+        <div class="squaredThree">
+<!--          <ng-template [ngIf]="docId.id != 'general'">-->
+<!--            <input *ngIf="!isInChannel(docId.id)" type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)"/>-->
+<!--            <input *ngIf="isInChannel(docId.id) || docId.username == getUsername()" type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)" checked/>-->
+<!--             <label for="{{docId.id}}"></label>-->
+<!--          </ng-template>-->
+          <ng-template [ngIf]="docId.id != 'general' && !isInChannel(docId.id) && docId.username == getUsername()">
+             <input  type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)" checked/>
+             <label for="{{docId.id}}"></label>
+          </ng-template>
+          <ng-template [ngIf]="docId.id != 'general' && !isInChannel(docId.id) && docId.username != getUsername()">
+             <input  type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)"/>
+             <label for="{{docId.id}}"></label>
+          </ng-template>
+          <ng-template [ngIf]="docId.id != 'general' && isInChannel(docId.id) && docId.username != getUsername()">
+             <input  type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)" checked/>
+             <label for="{{docId.id}}"></label>
+          </ng-template>
+          <ng-template [ngIf]="docId.id != 'general' && isInChannel(docId.id) && docId.username == getUsername()">
+             <input  type="checkbox" id="{{docId.id}}" name="check" value="0" (click)="checkBox(docId.id)" checked/>
+             <label for="{{docId.id}}"></label>
+          </ng-template>
+          <ng-template [ngIf]="docId.id == 'general'">
+            <input type="checkbox" name="check" value="0" checked/>
+             <label for="{{docId.id}}"></label>
+          </ng-template>
+        </div>
+      </section>
+
+      <ng-template [ngIf]="docId.id != 'general' && docId.username == getUsername()" [ngIfElse]="general">
+        <input class="channel-name ng-pristine ng-invalid ng-invalid-required ng-touched" [attr.disabled] = "active === 1 ? 'disabled' : null" [ngStyle]="{'color': docId.color}" placeholder="{{ docId.id }}" (keyup)="$event.keyCode == 13 && editDoc(docId.id, $event)">
+      </ng-template>
+      <ng-template #general>
+        <p class="channel-name-general" [ngStyle]="{'margin-left': '15px', 'color': docId.color}">{{ docId.id }}</p>
+      </ng-template>
+
+      <div *ngIf="docId.username == getUsername()" ngIfElse style="display: inherit; margin-right: 5%;">
+        <i *ngIf="docId != 'general'" class="zmdi zmdi-edit" (click)="changeInputStatus(docId.id, docId.color)"></i>
+
+        <div *ngIf="docId.id != 'general'" class="input-color-container">
+          <input class="input-color" type="color" id='{{ id }}' [value]='docId.color' (change)="editColorDoc(docId.id, $event.target.value)">
+        </div>
+
+
+        <i *ngIf="docId != 'general'" class="zmdi zmdi-close-circle"
+           (click)="deleteDoc(docId.id)"></i>
+      </div>
+    </span>
+</div>
