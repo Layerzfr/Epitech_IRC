@@ -1,0 +1,55 @@
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
+<app-connexion style="z-index: 10"></app-connexion>
+
+<div class="container-all">
+  <app-document-list class="document-list"></app-document-list>
+  <div class="center">
+    <div class="message-send">
+      <div class="message-container" #scrollMe>
+        <div *ngFor="let message of messageList">
+          <div class='message-unique'>
+            <div class="trait"></div>
+            <p style="margin-left: 58px; margin-right: 58px; color: #B0B0B0">
+              <span [ngStyle]="{'color': message[4]}"> [{{message[3]}}] </span>
+              {{message[1]}}
+              <br *ngIf="message[0] != null">
+              <a *ngIf="message[0] != null" style="color: white; font-weight: 100">user: {{message[0]}}</a>
+              <br>
+              {{message[2]}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-input">
+      <input type="text" class="input-message" [(ngModel)]="newMessage" (keyup)="$event.keyCode == 13 && sendMessage()"
+             placeholder="Tap message" name="value" value="{{messageHolder()}}" id="inputMessage"/>
+      <button class="send" (click)="sendMessage()">
+        <i class="zmdi zmdi-mail-send"></i>
+      </button>
+    </div>
+  </div>
+  <div class="pseudo-container">
+    <div class="pseudo">
+      <p class="title">Online</p>
+      <div *ngFor="let user of userList">
+        <div *ngFor="let username of user">
+          <ng-template [ngIf]="username == getUsername()" [ngIfElse]="UserName">
+            <p class="pseudo-MY-name" (click)="sendPrivate(username)">
+              {{username}}
+            </p>
+          </ng-template>
+          <ng-template #UserName>
+            <p class="pseudo-name" (click)="sendPrivate(username)">
+              {{username}}
+            </p>
+          </ng-template>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

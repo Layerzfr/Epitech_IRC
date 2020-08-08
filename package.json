@@ -1,0 +1,20 @@
+{
+  "name": "JSF_irc_2019",
+  "version": "1.0.0",
+  "description": "NotDiscord",
+  "dependencies": {
+    "back": "file:back",
+    "electron-packager": "^14.2.1",
+    "express": "^4.15.2",
+    "socket.io": "^2.3.0"
+  },
+  "scripts": {
+    "start": "npm i && cd back && npm i && cd ../front && npm i  && cd ../",
+    "back": "node back/src/app.js",
+    "front": "cd front && ng serve",
+    "scratch": "node index.js"
+  },
+  "devDependencies": {
+    "electron-installer-dmg": "^3.0.0"
+  }
+}

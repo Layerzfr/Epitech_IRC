@@ -1,0 +1,282 @@
+$width: 550px; // Change Me
+
+.container-all {
+  display: flex;
+  flex-direction: row;
+  z-index: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.document-list {
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  overflow: overlay;
+  position: fixed;
+  width: 15%;
+  height: 100%;
+  background-color: #454545;
+}
+
+.document-list::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+  background-color: #454545;
+}
+
+.document-list::-webkit-scrollbar {
+  width: 8px;
+  background-color: #F5F5F5;
+}
+
+.document-list::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+  border-radius: 25px;
+}
+
+.center {
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  right: 15%;
+  position: fixed;
+  width: 70%;
+  height: 100%;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+  width: 100%;
+  height: 100px;
+}
+
+.trait {
+  display: flex;
+  height: 2px;
+  width: 100%;
+  right: 0;
+  bottom: 100px;
+}
+
+.send-message {
+  display: flex;
+  flex-direction: row;
+  z-index: 10;
+  position: fixed;
+  align-self: flex-end;
+  bottom: 0;
+  width: 85%;
+  height: 100px;
+}
+
+.input-message {
+  margin-top: auto;
+  margin-bottom: auto;
+  border: none;
+  width: 100%;
+  height: 50px;
+  background-color: #454545;
+  padding-left: 50px;
+  padding-right: 50px;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-size: 15.7142857143px;
+  font-weight: 400;
+  border-radius: 5px;
+  margin-left: 8px;
+}
+
+.input-message:focus {
+  outline: none;
+}
+
+.button-div {
+  width: 10%;
+  height: 50px;
+}
+
+.button-send {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: none;
+
+  width: 100%;
+  height: 100%;
+}
+
+.button-send:focus {
+  outline: none;
+}
+
+.send {
+  margin-top: auto;
+  margin-bottom: auto;
+  background: #454545;
+  height: 51.94px;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding: 0;
+  position: relative;
+  outline: none;
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+i.zmdi.zmdi-mail-send {
+  font-size: 30px;
+  color: #d4d4d4;
+}
+
+.square {
+  margin-bottom: 5px;
+  background: #454545;
+  border-radius: 5px;
+  color: #fff;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-wrapper {
+  background-color: tomato;
+  z-index: 0;
+  display: flex;
+  position: fixed;
+  right: 0;
+  width: 85%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.flex-input {
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  position: fixed;
+  height: 8%;
+  bottom: 0;
+}
+
+.message-send {
+  display: flex;
+  position: fixed;
+  width: 70%;
+  align-content: flex-end;
+  height: 92%;
+  bottom: 8%;
+  flex-direction: row;
+  justify-content: flex-end;
+  overflow: auto;
+  justify-items: center;
+}
+
+.message-unique {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.message-container::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+  background-color: #454545;
+}
+
+.message-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: #F5F5F5;
+}
+
+.message-container::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+  border-radius: 25px;
+}
+
+.pseudo-container {
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  right: 0;
+  overflow: overlay;
+  position: fixed;
+  width: 15%;
+  height: 100%;
+  background-color: #454545;
+}
+
+.pseudo {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 98%;
+  align-self: flex-end;
+  overflow: auto;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #454545;
+}
+
+.pseudo::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+  background-color: #454545;
+}
+
+.pseudo::-webkit-scrollbar {
+  width: 8px;
+  background-color: #F5F5F5;
+}
+
+.pseudo::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+  border-radius: 25px;
+}
+
+.pseudo-chat {
+  display: flex;
+  flex-direction: row;
+}
+
+.title {
+  color: white;
+  font-family: "Roboto", sans-serif;
+  margin-top: 10px;
+  font-size: 25px;
+  font-weight: 400;
+}
+
+.pseudo-name {
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: $width/35;
+  font-weight: 200;
+}
+
+.pseudo-MY-name {
+  color: #aeffd5;
+  text-decoration: underline;
+  font-family: 'Roboto', sans-serif;
+  font-size: $width/35;
+  font-weight: 200;
+}
