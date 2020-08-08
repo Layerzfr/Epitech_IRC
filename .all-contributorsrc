@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "DamienRadatovic",
+      "name": "Radatovic Damien",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/55408621?v=4",
+      "profile": "https://github.com/DamienRadatovic",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "Epitech_IRC",
+  "projectOwner": "Layerzfr",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
